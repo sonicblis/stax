@@ -1,1 +1,5 @@
-users
+<div ng-controller="UserListController">
+    <div ng-repeat="(key, value) in users">
+        {{value.name}}
+    </div>
+</div>

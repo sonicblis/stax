@@ -1,0 +1,87 @@
+main-objective{
+    z-index: 1;
+    position: relative;
+}
+objective{
+    display: block;
+    border: solid 1px #ccc;
+    text-align: center;
+    color: #333;
+    background: #eee;
+    position: relative;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+}
+objective.collapsed{
+    margin: 2px 0 0 2px;
+    height: 40px;
+    line-height: 40px;
+    float: right;
+    width: 40px;
+}
+objective.expanded{
+    height: 120px;
+    line-height: 115px;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 200px;
+    float: right;
+}
+objective.expanded:hover>taskbar{
+    right: 220px;
+    transition: .25s;
+}
+.ghost{
+    opacity: .25;
+    cursor: pointer;
+    font-weight: bold;
+}
+.ghost:hover{
+    opacity: 1;
+}
+progressbar{
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: green;
+    width: 20%;
+}
+.clear{
+    clear: both;
+}
+.block{
+    display: block;
+}
+taskbar{
+    position: absolute;
+    z-index:-1;
+    white-space: nowrap;
+    right: 15px;
+    font-size: .5em;
+    font-weight: normal;
+    line-height: normal;
+    display: block;
+    text-align: right;
+    transition: .25s;
+    transition-delay: 1s;
+}
+task{
+    display: block;
+    margin: 0 0 0 20px;
+    cursor: pointer;
+}
+task:after{
+    border: solid 1px #ccc;
+    width: 10px;
+    height: 11px;
+    background: white;
+    line-height: 9px;
+    content:'';
+    display: inline-block;
+    position: absolute;
+    margin: 1px 4px 0 3px;
+    padding-left: 1px;
+}

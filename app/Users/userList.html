@@ -1,5 +1,3 @@
 <div ng-controller="UserListController">
-    <div ng-repeat="(key, value) in users">
-        {{value.name}}
-    </div>
+    <user ng-repeat="(key, user) in users" ng-model="user"></user>
 </div>

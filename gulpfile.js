@@ -48,7 +48,10 @@ gulp.task('watch', function(){
     gulp.watch('styles/**/*.less', ['less']);
 });
 gulp.task('deploy', shell.task(
-    ['firebase deploy','firebase open'],
+    [
+        'firebase deploy'
+        //,'firebase open'
+    ],
     {cwd: process.cwd()}
 ));
 

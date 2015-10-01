@@ -47,13 +47,7 @@ gulp.task('watch', function(){
     gulp.watch('app/**/*.js', ['unify']);
     gulp.watch(['styles/**/*.less','app/**/*.less'], ['less']);
 });
-gulp.task('deploy', shell.task(
-    [
-        'firebase deploy'
-        //,'firebase open'
-    ],
-    {cwd: process.cwd()}
-));
+gulp.task('deploy', shell.task(['firebase deploy'],{cwd: process.cwd()}));
 
 gulp.task('develop', ['thirdParty', 'unify', 'less', 'watch', 'webServer']);
 gulp.task('publish', ['thirdParty', 'less', 'unify-prod', 'deploy']);

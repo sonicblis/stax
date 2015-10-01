@@ -30,7 +30,7 @@ gulp.task('thirdParty', function(){
         .pipe(gulp.dest('dist/'));
 });
 gulp.task('less', function(){
-    gulp.src('styles/**/*.less')
+    gulp.src(['styles/**/*.less','app/**/*.less'])
         .pipe(less())
         .pipe(concat('all.css'))
         .pipe(gulp.dest('dist/'))
@@ -45,7 +45,7 @@ gulp.task('webServer', function() {
 });
 gulp.task('watch', function(){
     gulp.watch('app/**/*.js', ['unify']);
-    gulp.watch('styles/**/*.less', ['less']);
+    gulp.watch(['styles/**/*.less','app/**/*.less'], ['less']);
 });
 gulp.task('deploy', shell.task(
     [

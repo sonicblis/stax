@@ -4,6 +4,6 @@ app.directive("user", function(){
         scope: {
             user: '=ngModel'
         },
-        templateUrl: 'app/Users/directives/userTemplate.html'
+        templateUrl: 'app/Users/directives/user/userTemplate.html'
     }
 });

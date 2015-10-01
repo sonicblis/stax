@@ -5,7 +5,7 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         scope: {
             ngModel: '='
         },
-        templateUrl: 'app/objectives/directives/objectiveTemplate.html',
+        templateUrl: 'app/Objectives/directives/objectiveTemplate.html',
         controller: ['$scope', function($scope){
 
         }]

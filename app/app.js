@@ -8,10 +8,11 @@ app.run(['userProvider', function(userProvider){
                 console.log("Login Failed!", error);
             } else {
                 auth = authData;
+                userProvider.setUserInfo(auth.google.displayName, auth.google.id, auth.google.profileImageURL, true);
             }
         });
     }
-    if (auth) {
+    else {
         userProvider.setUserInfo(auth.google.displayName, auth.google.id, auth.google.profileImageURL, true);
     }
 }]);

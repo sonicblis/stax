@@ -12,11 +12,15 @@ app.service("userProvider", ['$firebaseObject', function($firebaseObject){
         return user;
     };
     this.setUserInfo = function(name, id, icon, authenticated){
+        var user = {};
         user.name = name;
         user.id = id;
         user.icon = icon;
         user.authenticated = authenticated;
-        _this.users[id] = user;
-        _this.users.$save();
+        _this.users.$loaded().then(function(){
+            _this.users[id] = user;
+            _this.users.$save();
+        });
+        _this.user = user;
     };
 }]);

@@ -30,10 +30,10 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', function(
     };
     this.addSubObjective = function(name, successDescription){
         var newSubObjective = _this.objectiveSubObjectives.$add(new _this.objective(name, successDescription));
-        return newSubObjective.key();
+        return newSubObjective.$id;
     }
     this.addTask = function(name){
         var newTask = _this.objectiveTasks.$add((new task(name)));
-        return newTask.key();
+        return newTask.$id;
     }
 }]);

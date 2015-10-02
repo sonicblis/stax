@@ -4,6 +4,10 @@
     </span>
     <sub-objectives>
         <objective class="collapsed" ng-repeat="(key, subObjective) in objective.subObjectives"></objective>
-        <objective class="collapsed ghost" add-field="side" on-add="addNewSubObjective()">+</objective>
+        <objective class="collapsed"
+                   ng-class="{'ghost':!adding}"
+                   ng-click="adding = true"
+                   add-field="side"
+                   on-add="addNewSubObjective(name)">+</objective>
     </sub-objectives>
 </div>

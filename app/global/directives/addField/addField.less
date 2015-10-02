@@ -1,6 +1,44 @@
 .dynamic-field{
   position: absolute;
-  display: inline-block;
   z-index: 2;
-  border: solid 1px #333;
+  border: solid 1px #aaa;
+  background: white;
+  opacity: 1;
+  text-align: left;
+  display: block;
+  width: 0px;
+  visibility: hidden;
+  padding: 0 0 0 10px;
+  transition: .25s;
+  font-size: 11pt;
+
+  &.show{
+    display: block;
+    visibility: visible;
+    width: 150px;
+    transition: .25s;
+  }
+}
+.dynamic-field-save-button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: #3E87E4;
+  cursor: pointer;
+  border: solid 1px #334780;
+  opacity: 0;
+  transition: .25s;
+
+  &.show{
+    transition: .25s;
+    opacity: 1;
+  }
+
+  i{
+    color: white;
+    font-size: 14pt;
+  }
 }

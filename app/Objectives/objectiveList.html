@@ -1,13 +1,16 @@
 <div ng-controller="objectiveListController">
-    <span class="main-objective">
-        <objective class="expanded" ng-model="objective"></objective>
-    </span>
-    <sub-objectives>
-        <objective class="collapsed" ng-repeat="(key, subObjective) in objective.subObjectives"></objective>
-        <objective class="collapsed"
-                   ng-class="{'ghost':!adding}"
-                   ng-click="adding = true"
-                   add-field="side"
-                   on-add="addNewSubObjective(name)">+</objective>
-    </sub-objectives>
+    <objectives>
+        <parent-objectives>
+            <objective ng-repeat="parentObjective in parentObjectives" ng-click="loadParentObjective(parentObjective.key)">{{parentObjective.objective.name}}</objective>
+        </parent-objectives>
+        <span class="main-objective">
+            <objective class="expanded" on-update="updateObjective()" ng-model="objective"></objective>
+        </span>
+        <child-objectives>
+            <objective collapsed="true" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>
+            <objective collapsed="true" class="ghost" add-field="side" on-add="addNewSubObjective(name)">
+                +
+            </objective>
+        </child-objectives>
+    </objectives>
 </div>

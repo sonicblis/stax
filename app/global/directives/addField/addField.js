@@ -12,6 +12,7 @@ app.directive("addField", ['$timeout', function($timeout){
                 input.removeClass('show');
                 input.val('');
                 saveButton.removeClass('show');
+                $el.attr('style','');
             }
 
             input.attr('style', style);
@@ -22,10 +23,11 @@ app.directive("addField", ['$timeout', function($timeout){
                 if ($event.which == 13){
                     var func = $scope[$attrs.onAdd.replace(/\([^\)]*\)/,'')];
                     func(input.val());
-                    cleanup();
+                    input.val('');
                 }
             });
             $el.bind('click', function(){
+                $el.attr('style', 'opacity: 1;');
                 saveButton.addClass('show');
                 input.addClass('show');
                 $timeout(function(){

@@ -3,11 +3,19 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         restrict: 'E',
         transclude: true,
         scope: {
-            objective: '=ngModel'
+            objective: '=ngModel',
+            collapsed: '@',
+            onUpdate: '&'
         },
         templateUrl: 'app/Objectives/directives/objective/objectiveTemplate.html',
         controller: ['$scope', function($scope){
 
-        }]
+        }],
+        link: function($scope, $el, $attr){
+            $scope.collapsed = $attr.collapsed;
+            if ($scope.collapsed){
+                $el.addClass('collapsed');
+            }
+        }
     }
 }]);

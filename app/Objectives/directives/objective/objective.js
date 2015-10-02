@@ -3,7 +3,7 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         restrict: 'E',
         transclude: true,
         scope: {
-            ngModel: '='
+            objective: '=ngModel'
         },
         templateUrl: 'app/Objectives/directives/objective/objectiveTemplate.html',
         controller: ['$scope', function($scope){

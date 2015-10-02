@@ -9,9 +9,14 @@ objective{
     color: #333;
     background: #eee;
     position: relative;
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
+}
+objective input{
+    outline: none;
+    border: 0;
+    background: transparent;
+    text-align: center;
+    font-size: 20px;
+    width: 100%;
 }
 objective.collapsed{
     margin: 2px 0 0 2px;
@@ -40,26 +45,12 @@ objective.expanded:hover>taskbar{
 .ghost:hover{
     opacity: 1;
 }
-progressbar{
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: green;
-    width: 20%;
-}
-.clear{
-    clear: both;
-}
-.block{
-    display: block;
-}
+
 taskbar{
     position: absolute;
     z-index:-1;
     white-space: nowrap;
-    right: 15px;
+    right: 220px;
     font-size: .5em;
     font-weight: normal;
     line-height: normal;

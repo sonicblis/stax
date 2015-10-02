@@ -1,3 +1,8 @@
 <span>
-    <ng-transclude></ng-transclude>
+    <taskbar>
+        <task ng-repeat="(key, task) in objective.tasks">{{task.name}}</task>
+    </taskbar>
+    <input ng-if="objective" type="text" ng-model="objective.name" />
+    <ng-transclude ng-if="!objective"></ng-transclude>
+    <progressbar progress="objective.progress"></progressbar>
 </span>

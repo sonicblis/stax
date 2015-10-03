@@ -13,9 +13,9 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', function(
     };
     function removeTrackedParents(keyChainOverwrite) {
         var selectedParent = _this.parentObjectives.find(function (parentObjective) {
-            parentObjective.key === keyChainOverwrite;
+            return parentObjective.key === keyChainOverwrite;
         });
-        _this.parentObjectives.splice(_this.parentObjectives.indexOf(selectedParent) - 1, _this.parentObjectives.length);
+        _this.parentObjectives.splice(_this.parentObjectives.indexOf(selectedParent), _this.parentObjectives.length);
     }
     function ensureRoot(){
         _this.currentObjective.$loaded(

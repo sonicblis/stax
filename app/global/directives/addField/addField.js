@@ -32,7 +32,7 @@ app.directive("addField", ['$timeout', function($timeout){
                 input.addClass('show');
                 $timeout(function(){
                     $el.find('input')[0].focus();
-                }, 100);
+                }, 250);
             });
             $el.append(input);
             $el.append(saveButton);

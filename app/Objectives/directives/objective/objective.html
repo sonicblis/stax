@@ -1,0 +1,11 @@
+<span>
+    <abbreviation ng-if="objective && collapsed">{{objective.abbreviation}}</abbreviation>
+    <name ng-if="objective && !collapsed" >
+        <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
+    </name>
+    <taskbar ng-if="!collapse">
+        <task ng-repeat="task in objective.tasks">{{task.name}}</task>
+    </taskbar>
+    <ng-transclude ng-if="!objective"></ng-transclude>
+    <progressbar progress="objective.progress"></progressbar>
+</span>

@@ -3,16 +3,12 @@
         <parent-objectives>
             <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadParentObjective(parentObjective.key)">{{parentObjective.objective.name}}</objective>
         </parent-objectives>
-        <span class="main-objective">
-            <objective mode="expanded"
-                       on-delete="deleteObjective()"
-                       on-update="updateObjective()"
-                       on-task-add="addTask(text)"
-                       ng-model="objective"></objective>
-        </span>
+        <main-objective>
+            <objective mode="expanded" tasks="tasks" on-update="updateObjective()" on-delete="deleteObjective()" ng-model="objective"></objective>
+        </main-objective>
         <child-objectives>
             <objective mode="mini" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>
-            <objective mode="mini" class="ghost" add-field="side" on-add="addNewSubObjective(name)">
+            <objective mode="mini" class="ghost" add-field="left" add-icon="true" on-add="addNewSubObjective(name)">
                 +
             </objective>
         </child-objectives>

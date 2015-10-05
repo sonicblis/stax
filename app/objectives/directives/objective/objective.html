@@ -5,10 +5,9 @@
             <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
         </name>
         <toolbar>
-            <tool ng-click="addingTask = !addingTask" tooltip="Add Task...">
+            <tool add-field="right" on-add="addTask(text)" tooltip="Add Task...">
                 <i class="fa fa-plus-circle"></i>
             </tool>
-            <input autofocus="autofocus" ng-model="$parent.newTaskText" type="text" ng-show="addingTask" ng-keypress="keyPress($event)">
             <tool class="right" ng-click="onDelete()" tooltip="Delete Objective">
                 <i class="fa fa-times-circle-o"></i>
             </tool>
@@ -16,10 +15,10 @@
                 <i class="fa fa-check-circle-o"></i>
             </tool>
         </toolbar>
-        <taskbar>
-            <task ng-repeat="task in objective.tasks">{{task.name}}</task>
+        <taskbar ui-sortable ng-model="tasks">
+            <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
         </taskbar>
     </span>
-    <ng-transclude ng-if="!objective"></ng-transclude>
+    <ng-transclude></ng-transclude>
     <progressbar progress="objective.progress"></progressbar>
 </span>

@@ -1,15 +1,18 @@
 app.controller("objectiveListController", ['$scope', 'objectiveProvider', function($scope, objectiveProvider){
     $scope.objective = objectiveProvider.currentObjective;
+    $scope.tasks = objectiveProvider.objectiveTasks;
     $scope.adding = false;
     $scope.addNewSubObjective = objectiveProvider.addSubObjective;
     $scope.parentObjectives = objectiveProvider.parentObjectives;
     $scope.loadChildObjective = function(index){
         objectiveProvider.loadObjective(objectiveProvider.getKey(index));
         $scope.objective = objectiveProvider.currentObjective;
+        $scope.tasks = objectiveProvider.objectiveTasks;
     }
     $scope.loadParentObjective = function(key){
         objectiveProvider.loadObjective(0, key);
         $scope.objective = objectiveProvider.currentObjective;
+        $scope.tasks = objectiveProvider.objectiveTasks;
     }
     $scope.updateObjective = function(){
         objectiveProvider.currentObjective.$save();
@@ -17,6 +20,7 @@ app.controller("objectiveListController", ['$scope', 'objectiveProvider', functi
     $scope.deleteObjective = function(){
         objectiveProvider.removeCurrentObjective().then(function(){
             $scope.objective = objectiveProvider.currentObjective;
+            $scope.tasks = objectiveProvider.objectiveTasks;
         });
     }
 }]);

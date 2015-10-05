@@ -1,6 +1,3 @@
-/**
- * Created by chris_000 on 2/23/2015.
- */
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -22,9 +19,12 @@ gulp.task('unify-prod', function() {
 });
 gulp.task('thirdParty', function(){
     gulp.src([
+        'node_modules/jquery/dist/jquery.min.js',
+        'thirdParty/jquery-ui.min.js',
         'node_modules/angular/angular.min.js',
+        'node_modules/angular-ui-sortable/dist/sortable.min.js',
         'thirdParty/firebase.min.js',
-        'node_modules/angularfire/dist/angularfire.min.js'
+        'node_modules/angularfire/dist/angularfire.min.js',
     ])
         .pipe(concat('thirdparty.js'))
         .pipe(gulp.dest('dist/'));

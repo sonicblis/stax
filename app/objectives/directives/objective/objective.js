@@ -5,17 +5,14 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         scope: {
             objective: '=ngModel',
             mode: '@',
-            onUpdate: '&',
-            onAddTask: '&',
+            tasks: '=',
             onDelete: '&',
-            onComplete: '&'
+            onUpdate: '&'
         },
         templateUrl: 'app/objectives/directives/objective/objective.html',
         controller: ['$scope', function($scope){
-            $scope.keyPress = function($event){
-                if ($event.which == 13){
-                    objectiveProvider.addTask($scope.newTaskText);
-                }
+            $scope.addTask = function(text){
+                objectiveProvider.addTask(text);
             }
         }],
         link: function($scope, $el, $attr){

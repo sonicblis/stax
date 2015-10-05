@@ -15,12 +15,6 @@ objectives{
         }
     }
 }
-
-main-objective{
-    z-index: 1;
-    position: relative;
-}
-
 parent-objectives{
     objective{
         padding: 0 0 2px 0;
@@ -48,11 +42,16 @@ objective{
                 color: white;
             }
         }
+
+        toolbar{
+            height: 25px;
+            transition: .25s;
+        }
     }
 
     &.expanded{
         height: 220px;
-        line-height: 115px;
+        line-height: 27px;
         font-weight: bold;
         font-size: 1.5em;
         width: 304px;
@@ -76,7 +75,7 @@ objective{
         }
     }
 
-    &.collapsed{
+    &.mini{
         margin: 2px 0 0 2px;
         height: 40px;
         line-height: 40px;
@@ -88,41 +87,36 @@ objective{
         outline: none;
         border: 0;
         background: transparent;
-        text-align: center;
+        text-align: left;
         font-size: 20px;
         width: 100%;
+        padding: 0 0 0 5px;
     }
-}
 
-taskbar{
-    position: absolute;
-    z-index:-1;
-    white-space: nowrap;
-    right: 220px;
-    font-size: .5em;
-    font-weight: normal;
-    line-height: normal;
-    display: block;
-    text-align: right;
-    transition: .25s;
-    transition-delay: 1s;
+    toolbar{
+        text-align: left;
+        display:block;
+        overflow: hidden;
+        font-size: .6em;
+        padding: 0 0 0 5px;
+        border-bottom: solid 1px #8ca2cc;
+        height: 0px;
+        color: white;
+        transition: .25s;
 
-    task{
-        display: block;
-        margin: 0 0 0 20px;
-        cursor: pointer;
+        &:hover{
+            font-size: .8em;
+            height: 27px;
+            transition: .25s;
+        }
 
-        &:after{
-            border: solid 1px #ccc;
-            width: 10px;
-            height: 11px;
-            background: white;
-            line-height: 9px;
-            content:'';
-            display: inline-block;
-            position: absolute;
-            margin: 1px 4px 0 3px;
-            padding-left: 1px;
+        tool{
+            &.right{
+                margin: 0 5px 0 0;
+                font-size: 1em;
+            }
         }
     }
 }
+
+

@@ -1,3 +1,12 @@
-/**
- * Created by chris_000 on 10/4/2015.
- */
+app.directive("messageOverlay", function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'app/global/directives/messageOverlay/messageOverlay.html',
+        controller: ['$scope', function ($scope) {
+
+        }],
+        link: function (scope, el, attrs) {
+
+        }
+    }
+});

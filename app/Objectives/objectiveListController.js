@@ -14,4 +14,9 @@ app.controller("objectiveListController", ['$scope', 'objectiveProvider', functi
     $scope.updateObjective = function(){
         objectiveProvider.currentObjective.$save();
     }
+    $scope.deleteObjective = function(){
+        objectiveProvider.removeCurrentObjective().then(function(){
+            $scope.objective = objectiveProvider.currentObjective;
+        });
+    }
 }]);

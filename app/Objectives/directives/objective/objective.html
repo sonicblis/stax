@@ -1,11 +1,24 @@
 <span>
-    <abbreviation ng-if="objective && collapsed">{{objective.abbreviation}}</abbreviation>
-    <name ng-if="objective && !collapsed" >
-        <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
-    </name>
-    <taskbar ng-if="!collapse">
-        <task ng-repeat="task in objective.tasks">{{task.name}}</task>
-    </taskbar>
+    <abbreviation ng-if="objective && mode == 'mini'">{{objective.abbreviation}}</abbreviation>
+    <span ng-if="objective && mode == 'expanded'">
+        <name>
+            <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
+        </name>
+        <toolbar>
+            <tool ng-click="onAddTask()">
+                <i class="fa fa-plus-circle"></i>
+            </tool>
+            <tool class="right" ng-click="onDelete()">
+                <i class="fa fa-times-circle-o"></i>
+            </tool>
+            <tool class="right" ng-click="onComplete()">
+                <i class="fa fa-check-circle-o"></i>
+            </tool>
+        </toolbar>
+        <taskbar>
+            <task ng-repeat="task in objective.tasks">{{task.name}}</task>
+        </taskbar>
+    </span>
     <ng-transclude ng-if="!objective"></ng-transclude>
     <progressbar progress="objective.progress"></progressbar>
 </span>

@@ -4,16 +4,24 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         transclude: true,
         scope: {
             objective: '=ngModel',
-            collapsed: '@',
-            onUpdate: '&'
+            mode: '@',
+            onUpdate: '&',
+            onAddTask: '&',
+            onDelete: '&',
+            onComplete: '&'
         },
-        templateUrl: 'app/Objectives/directives/objective/objectiveTemplate.html',
+        templateUrl: 'app/objectives/directives/objective/objective.html',
         controller: ['$scope', function($scope){
 
         }],
         link: function($scope, $el, $attr){
-            $scope.collapsed = $attr.collapsed;
-            if ($scope.collapsed){
+            if ($scope.mode == 'mini'){
+                $el.addClass('mini');
+            }
+            else if ($scope.mode == 'expanded'){
+                $el.addClass('expanded');
+            }
+            else if ($scope.mode == 'collapsed'){
                 $el.addClass('collapsed');
             }
         }

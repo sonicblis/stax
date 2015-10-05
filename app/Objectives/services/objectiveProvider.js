@@ -1,4 +1,4 @@
-app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', function($firebaseObject, $firebaseArray){
+app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', function($firebaseObject, $firebaseArray, $q){
     var _this = this;
     var keyChain = 'objectiveRoot';
     this.currentObjective = {};
@@ -68,6 +68,14 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', function(
     this.addTask = function(name){
         var newTask = _this.objectiveTasks.$add((new task(name)));
         return newTask.$id;
+    };
+    this.removeCurrentObjective = function(){
+        var deferred = $q.defer();
+        _this.currentObjective.$remove().then(function(){
+            _this.loadObjective(0, _this.parentObjectives[_this.parentObjectives.length - 1].key);
+            deferred.resolve();
+        });
+        return deferred.promise;
     };
 
     //init

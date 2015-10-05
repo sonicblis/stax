@@ -1,3 +1,4 @@
 <span>
-    <i class="fa fa-circle-o"></i>{{task.text}}
+    <i class="fa" ng-click="task.completed = !task.completed"
+       ng-class="{'fa-check-circle-o': task.completed, 'fa-circle-o': !task.completed}"></i>{{task.text}}
 </span>

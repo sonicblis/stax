@@ -104,13 +104,51 @@ objective{
         color: white;
         transition: .25s;
 
+        input{
+            background: white;
+            border: solid 1px #2d5ecc;
+            font-size: 1em;
+            padding: 2px;
+            width: 230px;
+            z-index: 2;
+            margin: 1px 0 0 4px;
+            position: absolute;
+        }
+
         &:hover{
-            font-size: .8em;
-            height: 27px;
-            transition: .25s;
+            overflow: visible;
+            transition: 0s;
+            transition-delay: .25s;
         }
 
         tool{
+            position: relative;
+
+            &:hover:not(.right)::after{
+                content: attr(tooltip);
+                font-size: .8em;
+                font-weight: normal;
+                position: absolute;
+                left: 16px;
+                top: -4px;
+                overflow: visible;
+                white-space: nowrap;
+                z-index: 1;
+
+                //font-size: .8em;
+                //height: 27px;
+                //transition: .25s;
+            }
+            &:hover.right::before{
+                content: attr(tooltip);
+                font-size: .8em;
+                font-weight: normal;
+                position: absolute;
+                top: -14px;
+                right: 0;
+                white-space: nowrap;
+                overflow: visible;
+            }
             &.right{
                 margin: 0 5px 0 0;
                 font-size: 1em;

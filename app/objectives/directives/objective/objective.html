@@ -5,13 +5,14 @@
             <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
         </name>
         <toolbar>
-            <tool ng-click="onAddTask()">
+            <tool ng-click="addingTask = !addingTask" tooltip="Add Task...">
                 <i class="fa fa-plus-circle"></i>
             </tool>
-            <tool class="right" ng-click="onDelete()">
+            <input autofocus="autofocus" ng-model="$parent.newTaskText" type="text" ng-show="addingTask" ng-keypress="keyPress($event)">
+            <tool class="right" ng-click="onDelete()" tooltip="Delete Objective">
                 <i class="fa fa-times-circle-o"></i>
             </tool>
-            <tool class="right" ng-click="onComplete()">
+            <tool class="right" ng-click="onComplete()" tooltip="Complete Objective">
                 <i class="fa fa-check-circle-o"></i>
             </tool>
         </toolbar>

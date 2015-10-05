@@ -35,7 +35,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', fun
         this.successDescription = successDescription;
     };
     this.task = function(name){
-        this.name = name;
+        this.text = name;
     };
 
     // api
@@ -66,7 +66,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', fun
         return newSubObjective.$id;
     };
     this.addTask = function(name){
-        var newTask = _this.objectiveTasks.$add((new task(name)));
+        var newTask = _this.objectiveTasks.$add((new _this.task(name)));
         return newTask.$id;
     };
     this.removeCurrentObjective = function(){

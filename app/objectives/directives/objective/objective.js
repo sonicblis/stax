@@ -12,7 +12,11 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         },
         templateUrl: 'app/objectives/directives/objective/objective.html',
         controller: ['$scope', function($scope){
-
+            $scope.keyPress = function($event){
+                if ($event.which == 13){
+                    objectiveProvider.addTask($scope.newTaskText);
+                }
+            }
         }],
         link: function($scope, $el, $attr){
             if ($scope.mode == 'mini'){

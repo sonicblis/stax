@@ -1,14 +1,25 @@
 taskbar{
-  font-size: .5em;
+  font-size: .6em;
   font-weight: normal;
   line-height: normal;
   display: block;
-  transition: .25s;
-  transition-delay: 1s;
+  text-align: left;
+  margin: 3px 0 0 0;
 
   task{
     display: block;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 3px;
     cursor: pointer;
+
+    i{
+      margin: 0 4px 0 0;
+
+      &.fa-check-circle-o{
+        color: #68D68B;
+      }
+      &.fa-circle-o{
+        color: #4D84DA;
+      }
+    }
   }
 }

@@ -4,7 +4,11 @@
             <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadParentObjective(parentObjective.key)">{{parentObjective.objective.name}}</objective>
         </parent-objectives>
         <span class="main-objective">
-            <objective mode="expanded" on-delete="deleteObjective()" on-update="updateObjective()" ng-model="objective"></objective>
+            <objective mode="expanded"
+                       on-delete="deleteObjective()"
+                       on-update="updateObjective()"
+                       on-task-add="addTask(text)"
+                       ng-model="objective"></objective>
         </span>
         <child-objectives>
             <objective mode="mini" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>

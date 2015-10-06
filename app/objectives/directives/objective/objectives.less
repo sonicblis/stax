@@ -21,7 +21,6 @@ parent-objectives{
         margin: 0 0 2px 0;
     }
 }
-
 objective{
     display: block;
     border: solid 1px #ccc;
@@ -42,10 +41,81 @@ objective{
                 color: white;
             }
         }
+    }
+
+    header{
+        &:hover{
+            & > toolbar{
+                height: 25px;
+                transition: .25s;
+            }
+        }
 
         toolbar{
-            height: 25px;
+            text-align: left;
+            display:block;
+            overflow: hidden;
+            font-size: .6em;
+            padding: 0 0 0 5px;
+            border-bottom: solid 1px #8ca2cc;
+            height: 0px;
+            color: white;
             transition: .25s;
+
+            input{
+                background: white;
+                border: solid 1px #2d5ecc;
+                font-size: 1em;
+                padding: 2px;
+                width: 230px;
+                z-index: 2;
+                margin: 1px 0 0 4px;
+                position: absolute;
+            }
+
+            &:hover{
+                overflow: visible;
+                transition: 0s;
+                transition-delay: .25s;
+            }
+
+            tool{
+                position: relative;
+
+                input{
+                    padding: 0 0 0 0 !important;
+                }
+
+                &:hover:not(.right)::after{
+                    content: attr(tooltip);
+                    font-size: .8em;
+                    font-weight: normal;
+                    position: absolute;
+                    left: 16px;
+                    top: -4px;
+                    overflow: visible;
+                    white-space: nowrap;
+                    z-index: 1;
+
+                    //font-size: .8em;
+                    //height: 27px;
+                    //transition: .25s;
+                }
+                &:hover.right::before{
+                    content: attr(tooltip);
+                    font-size: .8em;
+                    font-weight: normal;
+                    position: absolute;
+                    top: -14px;
+                    right: 0;
+                    white-space: nowrap;
+                    overflow: visible;
+                }
+                &.right{
+                    margin: 0 5px 0 0;
+                    font-size: 1em;
+                }
+            }
         }
     }
 
@@ -54,7 +124,7 @@ objective{
         line-height: 27px;
         font-weight: bold;
         font-size: 1.5em;
-        width: 304px;
+        width: 354px;
         float: right;
         background: #3f7fbc;
         color: white;
@@ -93,72 +163,7 @@ objective{
         padding: 0 0 0 5px;
     }
 
-    toolbar{
-        text-align: left;
-        display:block;
-        overflow: hidden;
-        font-size: .6em;
-        padding: 0 0 0 5px;
-        border-bottom: solid 1px #8ca2cc;
-        height: 0px;
-        color: white;
-        transition: .25s;
 
-        input{
-            background: white;
-            border: solid 1px #2d5ecc;
-            font-size: 1em;
-            padding: 2px;
-            width: 230px;
-            z-index: 2;
-            margin: 1px 0 0 4px;
-            position: absolute;
-        }
-
-        &:hover{
-            overflow: visible;
-            transition: 0s;
-            transition-delay: .25s;
-        }
-
-        tool{
-            position: relative;
-
-            input{
-                padding: 0 0 0 0 !important;
-            }
-
-            &:hover:not(.right)::after{
-                content: attr(tooltip);
-                font-size: .8em;
-                font-weight: normal;
-                position: absolute;
-                left: 16px;
-                top: -4px;
-                overflow: visible;
-                white-space: nowrap;
-                z-index: 1;
-
-                //font-size: .8em;
-                //height: 27px;
-                //transition: .25s;
-            }
-            &:hover.right::before{
-                content: attr(tooltip);
-                font-size: .8em;
-                font-weight: normal;
-                position: absolute;
-                top: -14px;
-                right: 0;
-                white-space: nowrap;
-                overflow: visible;
-            }
-            &.right{
-                margin: 0 5px 0 0;
-                font-size: 1em;
-            }
-        }
-    }
 }
 
 

@@ -6,6 +6,7 @@
   "license": "SimPL-2.0",
   "devDependencies": {
     "angular": "^1.4.1",
+    "angular-sanitize": "^1.4.7",
     "angular-ui-sortable": "^0.13.4",
     "angularfire": "^1.1.2",
     "bootstrap": "^3.3.5",

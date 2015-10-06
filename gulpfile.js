@@ -25,6 +25,7 @@ gulp.task('thirdParty', function(){
         'node_modules/angular-ui-sortable/dist/sortable.min.js',
         'thirdParty/firebase.min.js',
         'node_modules/angularfire/dist/angularfire.min.js',
+        'node_modules/angular-sanitize/angular-sanitize.min.js'
     ])
         .pipe(concat('thirdparty.js'))
         .pipe(gulp.dest('dist/'));

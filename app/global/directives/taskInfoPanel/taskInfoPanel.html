@@ -1,0 +1,21 @@
+<div>
+    <message-overlay message="Are you sure you want to delete this task?"
+                     ng-show="deleteRequested"
+                     on-ok="delete(); deleteRequested = false"
+                     on-cancel="deleteRequested = false"></message-overlay>
+    <header>
+        <check ng-model="task.completed"></check>
+        <name contenteditable="true" ng-model="task.text"></name>
+    </header>
+    <task-date ng-click="selectingDate = true">{{task.date | date}}</task-date>
+    <date-picker ng-show="selectingDate" date-selected="selectingDate = false" ng-model="task.date"></date-picker>
+    <description contenteditable="true" ng-model="task.description"></description>
+    <weight-picker ng-model="task.weight"></weight-picker>
+    <toolbar>
+        <tool>
+            <button ng-click="save()">save
+            </button><button ng-click="ngShow = false">cancel
+            </button><button ng-click="deleteRequested = true">delete</button>
+        </tool>
+    </toolbar>
+</div>

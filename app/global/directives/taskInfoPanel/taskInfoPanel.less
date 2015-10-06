@@ -1,0 +1,109 @@
+task-info-panel{
+  background: #eee;
+  color: black;
+  border: solid 1px #ccc;
+  border-radius: 0;
+  box-shadow: 0px 0px 12px -3px #000000;
+  position: absolute;
+  padding: 5px;
+  margin: 35px 8px 8px 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  message-overlay{
+    font-size: .7em;
+    font-weight: normal;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #eeeeee;
+    text-align: center;
+    z-index: 20;
+  }
+
+  weight-picker{
+    text-align: left;
+    position: absolute;
+    bottom: 13px;
+    left: 10px;
+  }
+
+  description{
+    border: solid 1px #ccc;
+    display: block;
+    position: absolute;
+    background: white;
+    top: 33px;
+    bottom: 43px;
+    right: 5px;
+    left: 5px;
+    font-size: 11pt;
+    text-align: left;
+    padding: 3px 6px 0 6px;
+    line-height: 13pt;
+    margin: 0 2px;
+    font-weight: normal;
+    clear: both;
+  }
+
+  task-date{
+    display: inline-block;
+    border: solid 1px #ccc;
+    width: 105px;
+    height: 25px;
+    font-size: .5em;
+    position: absolute;
+    font-weight: normal;
+    background: white;
+    left: 60px;
+    bottom: 8px;
+  }
+
+  toolbar{
+    position: absolute;
+    right: 3px;
+    bottom: 5px;
+    float: right;
+    height: 35px;
+    border: 0;
+
+    button{
+      border: solid 1px #888;
+      padding: 5px;
+      margin: 5px 5px 5px 0;
+
+      &:not(:last-child){
+        margin-right: 2px;
+      }
+      &:first-child{
+        background: rgb(135, 165, 133);
+        border: solid 1px #377d30;
+        color: white;
+      }
+      &:last-child{
+        background: rgb(163, 120, 118);
+        border: solid 1px #7d2e2f;
+        color: white;
+      }
+    }
+  }
+
+  check{
+    vertical-align: sub;
+  }
+
+  header{
+    text-align: left;
+    font-size: .6em;
+    font-weight: normal;
+
+    name{
+      outline: 0;
+      border: 0;
+    }
+  }
+}

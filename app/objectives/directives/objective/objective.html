@@ -1,23 +1,26 @@
 <span>
     <abbreviation ng-if="objective && mode == 'mini'">{{objective.abbreviation}}</abbreviation>
     <span ng-if="objective && mode == 'expanded'">
-        <name>
-            <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
-        </name>
-        <toolbar>
-            <tool add-field="right" on-add="addTask(text)" tooltip="Add Task...">
-                <i class="fa fa-plus-circle"></i>
-            </tool>
-            <tool class="right" ng-click="onDelete()" tooltip="Delete Objective">
-                <i class="fa fa-times-circle-o"></i>
-            </tool>
-            <tool class="right" ng-click="onComplete()" tooltip="Complete Objective">
-                <i class="fa fa-check-circle-o"></i>
-            </tool>
-        </toolbar>
+        <header>
+            <name>
+                <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
+            </name>
+            <toolbar>
+                <tool add-field="right" on-add="addTask(text)" tooltip="Add Task...">
+                    <i class="fa fa-plus-circle"></i>
+                </tool>
+                <tool class="right" ng-click="onDelete()" tooltip="Delete Objective">
+                    <i class="fa fa-times-circle-o"></i>
+                </tool>
+                <tool class="right" ng-click="onComplete()" tooltip="Complete Objective">
+                    <i class="fa fa-check-circle-o"></i>
+                </tool>
+            </toolbar>
+        </header>
         <taskbar ui-sortable="taskSortOptions" ng-model="tasks">
             <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
         </taskbar>
+        <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
     </span>
     <ng-transclude></ng-transclude>
     <progressbar progress="objective.progress"></progressbar>

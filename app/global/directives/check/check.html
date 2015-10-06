@@ -1,4 +1,4 @@
 <span>
-    <img ng-if="!checked" src="img/uncheck-flat.png" />
-    <img ng-if="checked" src="img/check-flat.png" />
+    <img ng-click="$parent.checked = true" ng-if="!checked" src="img/uncheck-flat.png" />
+    <img ng-click="$parent.checked = false" ng-if="checked" src="img/check-flat.png" />
 </span>

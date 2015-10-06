@@ -1,0 +1,59 @@
+date-picker{
+  font-size: 7pt;
+  font-family: verdana;
+  position: absolute;
+  background: white;
+  border: solid 1px #ccc;
+  z-index: 10;
+  bottom: -116px;
+  left: 50px;
+
+  td{
+    line-height: 10px;
+    text-align: center;
+    padding: 1px;
+
+    &:hover{
+      background: #519b4b;
+    }
+  }
+
+  .calendar-passedday{
+    cursor: not-allowed;
+  }
+
+  .calendar-today, .calendar-day{
+    cursor: pointer;
+    transition: .25s;
+    padding: 5px;
+  }
+
+  .prevmonth{
+    float:left;
+    padding-left:20px;
+  }
+
+  .clickable{
+    cursor: pointer;
+  }
+
+  .nextmonth{
+    float:right;
+    padding-right:20px;
+  }
+
+  .calendar-today{
+    color: red;
+  }
+
+  .calendar-passedday{
+    color: #ccc;
+  }
+
+  .selectedDay{
+    background: #519b4b;
+    color: white;
+    transition: .25s;
+  }
+}
+

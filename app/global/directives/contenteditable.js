@@ -22,7 +22,7 @@ app.directive('contenteditable', ['$sce', function ($sce) {
                 if (html == '<br>' || html == '<br />') {
                     html = '';
                 }
-                ngModel.$setViewValue($sce.getTrustedHtml(html));
+                ngModel.$setViewValue(html);
             }
         }
     };

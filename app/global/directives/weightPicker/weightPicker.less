@@ -1,0 +1,38 @@
+@selectedBarColor: #00a100;
+@unselectedBarColor: #c7c7c7;
+@hoverBarColor: #b0b0b0;
+
+weight-picker{
+  display: inline-block;
+  height: 20px;
+  width: 60px;
+
+  & > div{
+    width: 8px;
+    display: inline-block;
+    background: @unselectedBarColor;
+    margin: 0 4px 0 0;
+
+    &:hover{
+      &:not(.selected){
+        background: @hoverBarColor;
+      }
+    }
+
+    &.selected{
+      background: @selectedBarColor;
+    }
+  }
+
+  & > div:first-child{
+    height: 8px;
+  }
+
+  & > div:nth-child(2){
+    height: 16px;
+  }
+
+  & > div:last-child{
+    height: 24px;
+  }
+}

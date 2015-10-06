@@ -13,6 +13,15 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         controller: ['$scope', function($scope){
             $scope.addTask = function(text){
                 objectiveProvider.addTask(text);
+            };
+            $scope.taskSortOptions = {
+                stop: function(e, ui){
+                    var i = 0;
+                    objectiveProvider.objectiveTasks.forEach(function(task){
+                        task.$priority = i++;
+                        objectiveProvider.objectiveTasks.$save(task);
+                    });
+                }
             }
         }],
         link: function($scope, $el, $attr){

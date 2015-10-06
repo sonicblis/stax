@@ -15,7 +15,7 @@
                 <i class="fa fa-check-circle-o"></i>
             </tool>
         </toolbar>
-        <taskbar ui-sortable ng-model="tasks">
+        <taskbar ui-sortable="taskSortOptions" ng-model="tasks">
             <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
         </taskbar>
     </span>

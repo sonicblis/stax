@@ -1,0 +1,23 @@
+<div ng-controller="workSpaceController">
+    <existing-member-welcome class="center" ng-show="workspaces.length > 0">
+        <h1>Welcome back to Stax</h1>
+        <h3>What'r we working on today?</h3>
+        <workspace-list>
+            <workspace ng-repeat="workspace in workspaces" ng-click="loadWorkspace(workspace.key)" ng-model="workspace"></workspace>
+        </workspace-list>
+    </existing-member-welcome>
+    <new-member-welcome class="center" ng-hide="workspaces.length > 0">
+        <h1>Welcome to Stax</h1>
+        <h3>
+            Stax is a collaborative workspace for accomplishing anything by promoting planning, transparency and
+            accountability through real-time collaboration.
+        </h3>
+        <div>
+            <span>You don't have any workspaces yet!&nbsp;  Create one now and let's get going.</span>
+            <new-workspace-form>
+                <input autofocus type="text" ng-model="newWorkspaceName" ng-keypress="key($event)" /><i ng-click="addWorkspace()" class="fa fa-save">
+                </i>
+            </new-workspace-form>
+        </div>
+    </new-member-welcome>
+</div>

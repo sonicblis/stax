@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Stax</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="dist/all.css">
     <script src="dist/thirdparty.js"></script>
@@ -10,8 +11,9 @@
 </head>
 <body ng-app="stax">
 <div>
-    <div class="left" ng-include="'app/users/userList.html'"></div>
-    <div class="right" ng-include="'app/objectives/objectiveList.html'"></div>
+    <div ng-show="!workspaceLoaded" ng-include="'app/workSpaces/workSpaceList.html'"></div>
+    <div ng-show="workspaceLoaded" class="left" ng-include="'app/users/userList.html'"></div>
+    <div ng-show="workspaceLoaded" class="right" ng-include="'app/objectives/objectiveList.html'"></div>
 </div>
 </body>
 </html>

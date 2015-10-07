@@ -6,7 +6,7 @@ task-info-panel{
   box-shadow: 0px 0px 12px -3px #000000;
   position: absolute;
   padding: 5px;
-  margin: 35px 8px 8px 8px;
+  margin: 0px 0px 0px 0px;
   top: 0;
   left: 0;
   right: 0;
@@ -53,7 +53,7 @@ task-info-panel{
   task-date{
     display: inline-block;
     border: solid 1px #ccc;
-    width: 105px;
+    width: 120px;
     height: 25px;
     font-size: .5em;
     position: absolute;
@@ -80,9 +80,13 @@ task-info-panel{
         margin-right: 2px;
       }
       &:first-child{
-        background: rgb(135, 165, 133);
-        border: solid 1px #377d30;
+        background: rgb(104, 137, 165);
+        border: solid 1px #3a5d7d;
         color: white;
+      }
+      &:nth-child(2){
+        background: #cccac7;
+        border: solid 1px #989492;
       }
       &:last-child{
         background: rgb(163, 120, 118);

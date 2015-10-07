@@ -1,5 +1,5 @@
 <span>
-    <check ng-model="task.completed" ng-click="toggleComplete(task)"></check>
+    <check ng-model="task.completed" ng-click="save(task)"></check>
     <span ng-click="selectTask(task)" ng-bind-html="task.text | html"></span>
     <span ng-if="task.date"> by {{task.date | date:'M/d'}}</span>
 </span>

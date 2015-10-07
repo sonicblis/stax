@@ -3,8 +3,8 @@ app.directive('task', ['objectiveProvider', 'taskProvider', function(objectivePr
         restrict: 'E',
         templateUrl: 'app/Tasks/directives/task/task.html',
         controller: ['$scope', function($scope){
-            $scope.toggleComplete = function(task){
-                objectiveProvider.updateTaskCompletion(task);
+            $scope.save = function(task){
+                objectiveProvider.updateTask(task);
             };
             $scope.clientRect = {};
             $scope.selectTask = function(task){

@@ -1,4 +1,4 @@
-app.service("userProvider", ['$firebaseObject', function($firebaseObject){
+app.service("userProvider", ['$firebaseObject', '$firebaseArray', function($firebaseObject, $firebaseArray){
     //local
     var _this = this;
     var currentUser = {authenticated: false};
@@ -22,14 +22,14 @@ app.service("userProvider", ['$firebaseObject', function($firebaseObject){
     };
 
     //exposed
-    this.users = $firebaseObject(ref.child('users'));
-    this.getUser = function(){
-        return currentUser;
-    };
+    this.workspaces = [];
+    this.workspaceData = [];
     this.auth = function(){
         var auth = ref.getAuth();
         if (auth) {
             currentUser = $firebaseObject(ref.child('users').child(auth.google.id));
+            _this.workspaces = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaces'));
+            _this.workspaceData = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaceData'));
         }
         else{
             ref.authWithOAuthPopup("google", function (error, auth) {
@@ -37,9 +37,15 @@ app.service("userProvider", ['$firebaseObject', function($firebaseObject){
                     console.log("Login Failed!", error);
                 } else {
                     currentUser = $firebaseObject(ref.child('users').child(auth.google.id));
+                    _this.workspaces = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaces'));
+                    _this.workspaceData = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaceData'));
                     addUser(new user(auth));
                 }
             });
         }
+    };
+    this.users = $firebaseObject(ref.child('users'));
+    this.getUser = function(){
+        return currentUser;
     };
 }]);

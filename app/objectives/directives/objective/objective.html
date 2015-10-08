@@ -1,14 +1,11 @@
 <span>
-    <abbreviation ng-if="objective && mode == 'mini'">{{objective.abbreviation}}</abbreviation>
+    <abbreviation ng-if="objective && mode == 'mini'">{{objective.name}}</abbreviation>
     <span ng-if="objective && mode == 'expanded'">
         <header>
             <name>
-                <input type="text" ng-blur="onUpdate()" ng-model="objective.name" />
+                <span ng-model="objective.name" contenteditable="true" ng-blur="onUpdate()"></span>
             </name>
             <toolbar>
-                <tool add-field="right" on-add="addTask(text)" tooltip="Add Task...">
-                    <i class="fa fa-plus-circle"></i>
-                </tool>
                 <tool class="right" ng-click="onDelete()" tooltip="Delete Objective">
                     <i class="fa fa-times-circle-o"></i>
                 </tool>
@@ -20,6 +17,8 @@
         <taskbar ui-sortable="taskSortOptions" ng-model="tasks">
             <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
         </taskbar>
+        <add-task-button class="ghost" add-field="right" field-height="30" on-add="addTask(text)" tooltip="Add Task...">
+            <plus>+</plus></add-task-button>
         <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
     </span>
     <ng-transclude></ng-transclude>

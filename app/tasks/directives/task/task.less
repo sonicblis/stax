@@ -1,5 +1,5 @@
 taskbar{
-  font-size: .6em;
+  font-size: .7em;
   font-weight: normal;
   line-height: normal;
   display: block;
@@ -12,11 +12,15 @@ taskbar{
     cursor: pointer;
     position: relative;
 
+    &:last-child{
+      margin-bottom: 0;
+    }
+
     check{
       margin: 0 2px 0 0;
 
       img{
-        vertical-align: sub;
+        vertical-align: -.1em;
       }
     }
   }

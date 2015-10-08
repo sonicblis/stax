@@ -14,6 +14,7 @@ app.controller("workSpaceController", ['$scope', 'userProvider', 'objectiveProvi
         }
     }
     $scope.loadWorkspace = function(key){
-        objectiveProvider.loadWorkspaceRootObjective(key);
+        objectiveProvider.loadWorkspaceObjective(key);
+        sessionStorage.loadedWorkspace = key;
     }
 }]);

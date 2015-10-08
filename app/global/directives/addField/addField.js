@@ -3,13 +3,16 @@ app.directive("addField", ['$timeout', '$rootScope', function($timeout, $rootSco
         restrict: 'A',
         link: function($scope, $el, $attrs){
             var notRendered = true;
+            var widthOverride = $attrs.fieldWidth || 150;
+            var heightOverride = $attrs.fieldHeight;
+            //this should be dynamic
             $scope.$watch(function(){return $rootScope.workspaceLoaded;}, function(newVal){
                 $timeout(function(){
                     if (newVal && notRendered){
                     var input = angular.element('<input class="dynamic-field" type="text" />');
                     var saveButton = angular.element('<button class="dynamic-field-save-button"><i class="fa fa-save"></i></button>');
                     var elWidth = $el[0].offsetWidth;
-                    var elHeight = $el[0].offsetHeight;
+                    var elHeight = heightOverride || $el[0].offsetHeight;
                     var style = 'height: ' + (elHeight - 2) + 'px; top: -1px;'
                     switch ($attrs.addField) {
                         case 'left':

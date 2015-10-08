@@ -1,6 +1,7 @@
 app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseArray', '$q', '$rootScope', function(userProvider, $firebaseObject, $firebaseArray, $q, $rootScope) {
     var _this = this;
     var objectiveLoadedDelegates = [];
+    var keyChain = '';
     this.currentRef;
     this.currentObjective = null;
     this.subObjectives = undefined;
@@ -28,6 +29,15 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
             var percentComplete = completedTasksCount / totalTasksCount * 100;
             _this.currentObjective.progress = percentComplete;
             _this.currentRef.update({progress: percentComplete});
+        }
+    };
+    function ensureParentKeys(){
+        if (parentObjectives.length == 0){
+            var keys = keyChain.split('/subObjectives/');
+            keys.forEach(function(key){
+                //I have to get the name of the parent objective.  =[
+                //parentObjectives.push
+            });
         }
     };
 
@@ -63,8 +73,8 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
             delegate(_this.currentObjective);
         });
     }
-    this.loadWorkspaceRootObjective = function(key){
-        _this.loadObjective(0, 'users/' + userProvider.getUser().id + '/workspaceData/' + key);
+    this.loadWorkspaceObjective = function(key){
+        _this.loadObjective(0, 'users/' + userProvider.getUser().$id + '/workspaceData/' + key);
         $rootScope.workspaceLoaded = true;
     }
     this.getKey = function (objective) {

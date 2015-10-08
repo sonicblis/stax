@@ -14,9 +14,11 @@
                 </tool>
             </toolbar>
         </header>
-        <add-button class="ghost" add-field="right" on-add="addTask(text)" tooltip="Add Task...">
-            +
-        </add-button>
+        <slide-panel>
+            <add-button class="ghost" add-field="right" on-add="addTask(text)" tooltip="Add Task...">
+                +
+            </add-button>
+        </slide-panel>
         <message ng-show="tasks.length == 0">
             There are currently no tasks.  Add one by clicking above.
         </message>

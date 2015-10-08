@@ -101,7 +101,17 @@ objective{
         }
     }
 
-    &.expanded{
+
+    taskbar {
+        font-size: .7em;
+        font-weight: normal;
+        line-height: normal;
+        display: block;
+        text-align: left;
+        margin: 8px 0 15px 10px;
+    }
+
+        &.expanded{
         min-height: 220px;
         line-height: 27px;
         font-weight: bold;
@@ -125,29 +135,23 @@ objective{
             }
         }
 
-        add-task-button{
-            display: inline-block;
+        add-button{
+            margin: 5px 5px 0 5px;
+            height: 30px;
+            display: block;
+            background: #ccc;
+            color: #ddd;
+            width: 30px;
+            padding: 0;
+            line-height: 30px;
+            text-align: center;
+            visibility: visible;
             position: relative;
-            width: 27px;
-            margin-top: 3px;
-            margin-bottom: 20px;
-            height: 14px;
-            plus{
-                width: 16px;
-                height: 16px;
-                text-align: center;
-                color: black;
-                font-size: .8em;
-                font-weight: normal;
-                line-height: .9em;
-                background:#ccc;
-                border: #aaa;
-                display: inline-block;
-                border-radius: 30px;
-                margin: 0 0 10px 8px;
-                &:hover{
-                    box-shadow: 0px 0px 12px -3px #000000;
-                }
+            overflow: visible;
+            border: solid 1px #ddd;
+            font-size: 1em;
+            &:hover{
+                box-shadow: 0px 0px 12px -3px #000000;
             }
         }
     }
@@ -165,20 +169,6 @@ objective{
             color: black;
             border: solid 1px #ddd;
             box-shadow: 0px 0px 12px -3px #000000;
-        }
-
-        &:last-child{
-            margin-top: 5px;
-            margin-bottom: 8px;
-            height: 30px;
-            width: 30px;
-            padding: 0;
-            line-height: 30px;
-            text-align: center;
-            visibility: visible;
-            overflow: visible;
-            border: solid 1px #ddd;
-            font-size: 1em;
         }
     }
 

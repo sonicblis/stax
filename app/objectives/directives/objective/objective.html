@@ -14,12 +14,19 @@
                 </tool>
             </toolbar>
         </header>
+        <add-button class="ghost" add-field="right" on-add="addTask(text)" tooltip="Add Task...">
+            +
+        </add-button>
+        <message ng-show="tasks.length == 0">
+            There are currently no tasks.  Add one by clicking above.
+        </message>
         <taskbar ui-sortable="taskSortOptions" ng-model="tasks">
             <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
         </taskbar>
-        <add-task-button class="ghost" add-field="right" field-height="30" on-add="addTask(text)" tooltip="Add Task...">
-            <plus>+</plus></add-task-button>
     </span>
+    <message ng-if="mode == 'expanded'" ng-show="!objective.subObjectives || objective.subObjectives.hasOwnProperty('$value')">
+        This goal has no sub-goals.  Add one by clicking below.
+    </message>
     <ng-transclude></ng-transclude>
     <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
     <progressbar progress="objective.progress"></progressbar>

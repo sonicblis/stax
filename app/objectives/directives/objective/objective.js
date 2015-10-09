@@ -11,6 +11,7 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
         },
         templateUrl: 'app/objectives/directives/objective/objective.html',
         controller: ['$scope', function($scope){
+            $scope.tools = {show: false};
             $scope.taskIsSelected = false;
             $scope.addTask = function(text){
                 objectiveProvider.addTask(text);

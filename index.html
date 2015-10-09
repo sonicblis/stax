@@ -10,6 +10,10 @@
     <script src="dist/all.js"></script>
 </head>
 <body ng-app="stax">
+<header>
+    <brand>Stax</brand>
+    <user-tools></user-tools>
+</header>
 <div>
     <div ng-show="!workspaceLoaded" ng-include="'app/workSpaces/workSpaceList.html'"></div>
     <div ng-show="workspaceLoaded" class="left" ng-include="'app/users/userList.html'"></div>

@@ -7,7 +7,7 @@ app.directive("slidePanel", [function () {
 
         }],
         link: function ($scope, $el, $attr) {
-
+            $scope.collapsed = !($scope.$eval($attr.expanded)) || true;
         }
     }
 }]);

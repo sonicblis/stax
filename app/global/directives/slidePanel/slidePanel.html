@@ -1,6 +1,6 @@
 <toggle ng-click="collapsed = !collapsed">
-    <i class="fa fa-caret-down"></i>
+    <i class="fa" ng-class="{'fa-caret-down':collapsed,'fa-caret-up':!collapsed}"></i>
 </toggle>
-<content>
+<content ng-class="{'collapsed':collapsed}">
     <ng-transclude></ng-transclude>
 </content>

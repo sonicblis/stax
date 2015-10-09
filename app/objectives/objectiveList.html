@@ -1,15 +1,23 @@
 <div ng-controller="objectiveListController">
     <objectives>
+        <objective-tools ng-class="{'collapsed':toolsCollapsed}">
+            <collapse-handle ng-click="toolsCollapsed = true"><i class="fa fa-caret-right"></i></collapse-handle>
+            <tool ng-click="deleteObjective()">Delete Objective</tool>
+            <tool>Demote Objective to Task</tool>
+            <tool>Third tool</tool>
+        </objective-tools>
         <parent-objectives>
             <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadParentObjective(parentObjective.key)">{{parentObjective.objective.name}}</objective>
         </parent-objectives>
         <main-objective>
             <objective mode="expanded" tasks="tasks" on-update="updateObjective()" on-delete="deleteObjective()" ng-model="objective">
-                <child-objectives>
-                    <objective mode="mini" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>
+                <slide-panel class="raised-toggle" expanded="objective.subObjectives && objective.subObjectives.hasOwnProperty('$value') == false">
                     <add-button class="ghost" add-field="right" on-add="addNewSubObjective(name)">
                         +
                     </add-button>
+                </slide-panel>
+                <child-objectives ng-if="objective.subObjectives && objective.subObjectives.hasOwnProperty('$value') == false">
+                    <objective mode="mini" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>
                 </child-objectives>
             </objective>
         </main-objective>

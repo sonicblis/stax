@@ -1,12 +1,33 @@
 slide-panel{
   position: relative;
-  overflow: hidden;
+  display: block;
+
+  &.raised-toggle{
+    toggle {
+      top: -21px;
+    }
+  }
+
+  content{
+    display: block;
+    overflow: hidden;
+    transition: .25s;
+
+    &.collapsed{
+      height: 0;
+    }
+  }
+
   & > toggle{
     display:inline-block;
     position: absolute;
+    z-index: 5;
     right: 0;
-    top: 0;
+    top: -3px;
     bottom: 0;
     width: 30px;
+    color: #87ADD2;
+
+
   }
 }

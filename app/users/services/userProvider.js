@@ -1,4 +1,4 @@
-app.service("userProvider", ['$firebaseObject', '$firebaseArray', '$injector', function($firebaseObject, $firebaseArray, $injector){
+app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', '$injector', function($rootScope, $firebaseObject, $firebaseArray, $injector){
     //local
     var _this = this;
     var currentUser = {authenticated: false};
@@ -18,6 +18,7 @@ app.service("userProvider", ['$firebaseObject', '$firebaseArray', '$injector', f
             var objectiveProvider = $injector.get("objectiveProvider");
             objectiveProvider.loadWorkspaceObjective(sessionStorage.loadedWorkspace);
         }
+        $rootScope.user = currentUser;
     };
     function addUser(user){
         _this.users.$loaded().then(function(){

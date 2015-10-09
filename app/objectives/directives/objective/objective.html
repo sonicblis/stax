@@ -25,6 +25,6 @@
     <message ng-if="mode == 'expanded'" ng-show="!objective.subObjectives || objective.subObjectives.hasOwnProperty('$value')">
         This goal has no sub-goals.  Add one by clicking above.
     </message>
-    <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
     <progressbar progress="objective.progress"></progressbar>
+    <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
 </span>

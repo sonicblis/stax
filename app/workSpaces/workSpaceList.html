@@ -4,6 +4,11 @@
         <h3>What'r we working on today?</h3>
         <workspace-list>
             <workspace ng-repeat="workspace in workspaces" ng-click="loadWorkspace(workspace.key)" ng-model="workspace"></workspace>
+            <new-workspace ng-click="adding = true" ng-hide="adding">New Workspace</new-workspace>
+            <new-workspace-form ng-show="adding">
+                <input autofocus type="text" ng-model="newWorkspaceName" ng-keypress="key($event)" /><i ng-click="addWorkspace()" class="fa fa-save">
+            </i>
+            </new-workspace-form>
         </workspace-list>
     </existing-member-welcome>
     <new-member-welcome class="center" ng-hide="workspaces.length > 0">

@@ -12,12 +12,17 @@
 <body ng-app="stax">
 <header>
     <brand>Stax</brand>
-    <user-tools></user-tools>
+    <user-tools>
+        <tool ng-click="workspaceLoaded = false">Workspaces</tool>
+        <tool>Logout</tool>
+        <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
+    </user-tools>
 </header>
 <div>
     <div ng-show="!workspaceLoaded" ng-include="'app/workSpaces/workSpaceList.html'"></div>
-    <div ng-show="workspaceLoaded" class="left" ng-include="'app/users/userList.html'"></div>
-    <div ng-show="workspaceLoaded" class="right" ng-include="'app/objectives/objectiveList.html'"></div>
+    <centered>
+        <div ng-show="workspaceLoaded" ng-include="'app/objectives/objectiveList.html'"></div>
+    </centered>
 </div>
 </body>
 </html>

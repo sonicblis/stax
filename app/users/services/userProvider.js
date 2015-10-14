@@ -9,10 +9,14 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
         this.icon = authData.google.profileImageURL;
         this.authenticated = true;
     }
+    $rootScope.logout = function(){
+        _this.logout();
+    }
     function loadUserData(auth){
         currentUser = $firebaseObject(ref.child('users').child(auth.google.id));
         _this.workspaces = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaces'));
         _this.workspaceData = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaceData'));
+        _this.invitationList = $firebaseArray(ref.child('invitations'));
         if (sessionStorage.loadedWorkspace)
         {
             var objectiveProvider = $injector.get("objectiveProvider");
@@ -21,13 +25,10 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
         $rootScope.user = currentUser;
     };
     function addUser(user){
-        _this.users.$loaded().then(function(){
-            var existingUser = _this.users.find(function(existingUser){
-                return existingUser.id == user.id
-            });
-            if (!existingUser) {
-                _this.users[id] = user;
-                _this.users.$save();
+        _this.accounts.$loaded().then(function(){
+            if (!_this.accounts[user.id]) {
+                _this.accounts[user.id] = user;
+                _this.accounts.$save();
             }
         });
     };
@@ -35,6 +36,18 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
     //exposed
     this.workspaces = [];
     this.workspaceData = [];
+    this.invitationList = [];
+    this.addInvitation = function(email, key){
+
+        _this.invitationList.$add({email: email, key: key, invitedOn: new Date().getTime()});
+        var objectiveProvider = $injector.get("objectiveProvider");
+        objectiveProvider.collaborators.$add({email: email, invitedOn: new Date().getTime(), status: 'pending'});
+    };
+    this.logout = function(){
+        ref.unauth();
+        _this.currentUser = null;
+        $rootScope.workspaceLoaded = false;
+    };
     this.auth = function(){
         var auth = ref.getAuth();
         if (auth) {
@@ -51,7 +64,7 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
             });
         }
     };
-    this.users = $firebaseObject(ref.child('users'));
+    this.accounts = $firebaseObject(ref.child('accounts'));
     this.getUser = function(){
         return currentUser;
     };

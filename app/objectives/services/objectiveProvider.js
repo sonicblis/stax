@@ -2,7 +2,7 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
     var _this = this;
     var objectiveLoadedDelegates = [];
     var keyChain = '';
-    this.currentRef;
+    this.currentRef = null;
     this.currentObjective = null;
     this.subObjectives = undefined;
     this.parentObjectives = [];
@@ -12,7 +12,7 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
     function getFirstCharactersOfFirstTwoWords(name) {
         var parts = name.split(' ');
         return parts[0].substring(0, 1) + parts[1].substring(0, 1);
-    };
+    }
     function removeTrackedParents(keyChainOverwrite) {
         var selectedParent = _this.parentObjectives.find(function (parentObjective) {
             return parentObjective.key === keyChainOverwrite;
@@ -30,7 +30,7 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
             _this.currentObjective.progress = percentComplete;
             _this.currentRef.update({progress: percentComplete});
         }
-    };
+    }
     function ensureParentKeys(){
         if (parentObjectives.length == 0){
             var keys = keyChain.split('/subObjectives/');
@@ -39,7 +39,7 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
                 //parentObjectives.push
             });
         }
-    };
+    }
 
     // types
     this.objective = function (name, successDescription) {
@@ -55,6 +55,9 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
     this.objectiveLoaded = function(delegate){
         objectiveLoadedDelegates.push(delegate);
     };
+    this.getKeychain = function(){
+        return keyChain;
+    };
     this.loadObjective = function (objectiveKey, keyChainOverwrite) {
         if (keyChainOverwrite) {
             keyChain = keyChainOverwrite;
@@ -69,14 +72,18 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
         _this.currentObjective = $firebaseObject(objective);
         _this.subObjectives = $firebaseArray(objective.child('subObjectives'));
         _this.objectiveTasks = $firebaseArray(objective.child('tasks'));
+        _this.collaborators = $firebaseArray(objective.child('collaborators'));
         objectiveLoadedDelegates.forEach(function(delegate){
             delegate(_this.currentObjective);
         });
-    }
+    };
     this.loadWorkspaceObjective = function(key){
-        _this.loadObjective(0, 'users/' + userProvider.getUser().$id + '/workspaceData/' + key);
+        if (key.indexOf('users/') == -1){
+            key = 'users/' + userProvider.getUser().$id + '/workspaceData/' + key;
+        }
+        _this.loadObjective(0, key);
         $rootScope.workspaceLoaded = true;
-    }
+    };
     this.getKey = function (objective) {
         return _this.subObjectives.$keyAt(objective);
     };
@@ -92,7 +99,7 @@ app.service("objectiveProvider", ['userProvider', '$firebaseObject', '$firebaseA
     this.updateTask = function (task) {
         _this.objectiveTasks.$save(task);
         updateCurrentObjectiveProgress();
-    }
+    };
     this.removeCurrentObjective = function(){
         var deferred = $q.defer();
         _this.currentObjective.$remove().then(function(){

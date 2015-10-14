@@ -14,7 +14,7 @@
     <brand>Stax</brand>
     <user-tools>
         <tool ng-click="workspaceLoaded = false">Workspaces</tool>
-        <tool>Logout</tool>
+        <tool ng-click="logout()">Logout</tool>
         <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
     </user-tools>
 </header>

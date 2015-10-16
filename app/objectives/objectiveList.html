@@ -1,25 +1,49 @@
-<div ng-controller="objectiveListController">
-    <objectives>
-        <parent-objectives>
-            <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadParentObjective(parentObjective.key)">{{parentObjective.objective.name}}</objective>
-        </parent-objectives>
-        <main-objective>
-            <objective mode="expanded" tasks="tasks" on-update="updateObjective()" on-delete="deleteObjective()" ng-model="objective">
-                <objective-tools ng-class="{'collapsed':!$parent.tools.show}">
-                    <collapse-handle ng-click="$parent.tools.show = false"><i class="fa fa-caret-right"></i></collapse-handle>
-                    <tool>Delete Objective</tool>
-                    <tool>Demote Objective to Task</tool>
-                    <tool>Move to another Objective</tool>
-                </objective-tools>
-                <slide-panel class="raised-toggle" expanded="objective.subObjectives && objective.subObjectives.hasOwnProperty('$value') == false">
-                    <add-button class="ghost" add-field="right" on-add="addNewSubObjective(name)">
-                        +
-                    </add-button>
-                </slide-panel>
-                <child-objectives ng-if="objective.subObjectives && objective.subObjectives.hasOwnProperty('$value') == false">
-                    <objective mode="mini" ng-repeat="objective in objective.subObjectives" ng-model="objective" ng-click="loadChildObjective($index)"></objective>
-                </child-objectives>
-            </objective>
-        </main-objective>
-    </objectives>
+<div ng-controller="ObjectiveListController">
+    <!-- no objectives exists so they have none or aren't logged in -->
+    <new-member-welcome class="center" ng-show="objectives.length == 0">
+        <h1>Welcome to Stax</h1>
+        <h3>
+            Stax is a collaborative workspace for accomplishing anything by promoting planning, transparency and
+            accountability through real-time collaboration.
+        </h3>
+
+        <!-- logged in but have no objectives -->
+        <div ng-show="user.authenticated">
+            <span>You don't have any workspaces yet!&nbsp;  Create one now and let's get going.</span>
+            <new-objective-form>
+                <input autofocus type="text" ng-model="newObjectiveName" ng-keypress="key($event)" /><i ng-click="addObjective()" class="fa fa-save">
+            </i>
+            </new-objective-form>
+        </div>
+
+        <!-- not logged in -->
+        <div ng-hide="user.authenticated">
+            Login to use workspaces<br /><br />
+            <img ng-click="login()" src="img/googlelogin.png" width="200" />
+        </div>
+    </new-member-welcome>
+
+    <!-- objectives have been loaded and exist (must be logged in) -->
+    <existing-member-welcome class="center" ng-show="user.authenticated && objectives.length > 0">
+        <h1>Welcome back to Stax</h1>
+        <h3>What'r we working on today?</h3>
+        <objective-list>
+            <objective-item ng-repeat="objective in objectives" ng-click="loadObjective(objective)">{{objective.name}}</objective-item>
+            <new-objective ng-click="adding = true" ng-hide="adding">New Workspace</new-objective>
+            <new-objective-form ng-show="adding">
+                <input autofocus type="text" ng-model="newObjectiveName" ng-keypress="key($event)" /><i ng-click="addObjective()" class="fa fa-save">
+            </i>
+            </new-objective-form>
+        </objective-list>
+    </existing-member-welcome>
+
+    <public-objectives ng-show="user.authenticated">
+        Or join a public workspace
+        <public-objective ng-switch="objective.status" ng-repeat="objective in publicObjectives">{{objective.name}}
+            <span ng-switch-when="pending"> <button class="warn">Waiting</button></span>
+            <span ng-switch-when="approved"> <button class="success">Leave</button></span>
+            <span ng-switch-when="blocked"> <button class="danger">Blocked</button></span>
+            <span ng-switch-default ng-click="requestAccessTo(objective)"> <button>Ask to Join</button></span>
+        </public-objective>
+    </public-objectives>
 </div>

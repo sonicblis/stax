@@ -9,3 +9,108 @@ objectives{
   overflow: visible;
   position: relative;
 }
+
+objective-list{
+  new-objective{
+    background: #eee;
+    border: dashed 1px #ccc;
+    color: black;
+    display: block;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 0 5px 0;
+    padding: 20px;
+
+    &:hover{
+      border: solid 1px #304eaa;
+      background: #3a5d7d;
+      color: white;
+    }
+  }
+  new-objective-form{
+    margin: 0;
+  }
+}
+
+objective-item, new-objective{
+  display: block;
+  border: solid 1px #304eaa;
+  background: #3a5d7d;
+  color: white;
+
+  display: block;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 0 5px 0;
+  padding: 20px;
+  & > div{
+
+  }
+}
+
+public-objectives{
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 20px 0;
+
+  public-objective{
+    font-size: .9em;
+    color: black;
+    background: #eee;
+    cursor: pointer;
+    padding: 10px 10px 10px 130px;
+    border: dashed 1px #ccc;
+    margin: 5px 0;
+    display: block;
+    text-align: center;
+    overflow: auto;
+    line-height: 2.5em;
+
+    &:first-child{
+      margin-top: 20px;
+    }
+
+    &:hover{
+      border: solid 1px #304eaa;
+      background: #3a5d7d;
+      color: white;
+    }
+
+    button{
+      margin-left: 10px;
+      float: right;
+      width: 120px;
+    }
+  }
+}
+
+new-objective-form{
+  display: block;
+  text-align: center;
+  clear: both;
+  padding: 20px;
+  border: solid 1px #ccc;
+  background: #eee;
+  margin: 120px 0;
+
+  i{
+    color: white;
+    height: 20px;
+    border: solid 1px #304eaa;
+    background: #5f97cb;
+    padding: 15px;
+    height: 29px;
+    width: 34px;
+    display: inline-block;
+    margin: 0 0 0 0;
+    font-size: 22pt !important;
+    position: relative;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 24pt;
+  }
+}

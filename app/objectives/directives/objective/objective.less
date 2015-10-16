@@ -4,8 +4,10 @@ parent-objectives{
         margin: 0 0 2px 0;
     }
 }
+
 objective{
     display: block;
+    text-align: left;
     border: solid 1px #ccc;
     color: #333;
     background: #eee;
@@ -22,6 +24,24 @@ objective{
             input {
                 color: white;
             }
+        }
+    }
+
+    abbreviation, name{
+        & > span:last-child{
+            font-weight: normal;
+            font-size: .6em;
+            display:inline-block;
+            margin-left: 8px;
+            margin-top: 1px;
+            position: absolute;
+        }
+    }
+
+    abbreviation{
+        & > span:last-child{
+            margin-top: 0;
+            font-size: .7em;
         }
     }
 

@@ -6,7 +6,7 @@ app.directive("addField", ['$timeout', '$rootScope', function($timeout, $rootSco
             var widthOverride = $attrs.fieldWidth || 150;
             var heightOverride = $attrs.fieldHeight;
             //this should be dynamic
-            $scope.$watch(function(){return $rootScope.workspaceLoaded;}, function(newVal){
+            $scope.$watch(function(){return $rootScope.objectiveLoaded;}, function(newVal){
                 $timeout(function(){
                     if (newVal && notRendered){
                     var input = angular.element('<input class="dynamic-field" type="text" />');

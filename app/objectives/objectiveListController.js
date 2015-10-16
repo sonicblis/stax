@@ -1,23 +1,46 @@
-app.controller("objectiveListController", ['$scope', 'objectiveProvider', function($scope, objectiveProvider){
-    $scope.objective = objectiveProvider.currentObjective;
-    $scope.tasks = objectiveProvider.objectiveTasks;
-    objectiveProvider.objectiveLoaded(function(objective){
-        $scope.objective = objectiveProvider.currentObjective;
-        $scope.tasks = objectiveProvider.objectiveTasks;
+app.controller("ObjectiveListController", ['$scope', 'userProvider', 'objectiveProvider', '$rootScope', function($scope, userProvider, objectiveProvider, $rootScope){
+    $scope.objectives = [];
+    $scope.publicObjectives = [];
+    $scope.collaborations = userProvider.collaborations;
+    objectiveProvider.objectivesProvided(function(usersObjectives, publicObjectives){
+        $scope.objectives = usersObjectives;
+        $scope.publicObjectives = publicObjectives;
+        $scope.publicObjectives.$loaded(function(){
+            $scope.$watch('publicObjectives', $scope.modifyPublicObjectives);
+            $scope.$watch('collaborations', $scope.modifyPublicObjectives, true);
+        })
     });
-    $scope.adding = false;
-    $scope.addNewSubObjective = objectiveProvider.addSubObjective;
-    $scope.parentObjectives = objectiveProvider.parentObjectives;
-    $scope.loadChildObjective = function(index){
-        objectiveProvider.loadObjective(objectiveProvider.getKey(index));
+    $scope.modifyPublicObjectives = function(){
+        $scope.publicObjectives.forEach(function(objective){
+            if ($rootScope.user.collaborating && $rootScope.user.collaborating[objective.$id]) {
+                objective.requested = true;
+                objective.status = $rootScope.user.collaborating[objective.$id].status;
+            }
+            else{
+                delete objective.requested;
+                delete objective.status;
+            }
+        });
     };
-    $scope.loadParentObjective = function(key){
-        objectiveProvider.loadObjective(0, key);
+    $scope.newObjectiveName = '';
+    $scope.addObjective = function(){
+        objectiveProvider.addObjective($scope.newObjectiveName);
+        $scope.newObjectiveName = '';
+        $scope.adding = false;
     };
-    $scope.updateObjective = function(){
-        objectiveProvider.currentObjective.$save();
+    $scope.key = function(event){
+        if (event.which == 13){
+            $scope.addObjective();
+        }
     };
-    $scope.deleteObjective = function(){
-        objectiveProvider.removeCurrentObjective();
+    $scope.loadObjective = function(objective){
+        objectiveProvider.loadObjective(objective, true);
+        sessionStorage.loadedObjective = objective.$id;
+        $rootScope.objectiveLoaded = true;
+    }
+    $scope.requestAccessTo = function(objective){
+        objectiveProvider.addCollaborationRequestFromCurrentUser(objective).then(function() {
+            $scope.modifyPublicObjectives();
+        });
     };
 }]);

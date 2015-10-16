@@ -1,0 +1,29 @@
+<div ng-controller="objectiveListController">
+    <objectives>
+        <parent-objectives>
+            <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadObjective(parentObjective)">{{parentObjective.name}}</objective>
+        </parent-objectives>
+        <main-objective>
+            <objective mode="expanded" tasks="tasks" on-update="updateObjective(objective)" on-delete="deleteObjective()" ng-model="objective">
+                <objective-tools ng-class="{'collapsed':!$parent.tools.show}">
+                    <collapse-handle ng-click="$parent.tools.show = false"><i class="fa fa-caret-right"></i></collapse-handle>
+                    <tool ng-click="togglePublic(objective)">{{(objective.public) ? 'Disallow' : 'Allow'}} Join Requests</tool>
+                    <tool>Demote Objective to Task</tool>
+                    <tool>Move to another Objective</tool>
+                    <tool ng-click="deleteObjective()">Delete Objective</tool>
+                </objective-tools>
+                <slide-panel class="raised-toggle" expanded="objective.subObjectives && objective.subObjectives.hasOwnProperty('$value') == false">
+                    <add-button class="ghost" add-field="right" on-add="addNewSubObjective(name)">
+                        +
+                    </add-button>
+                </slide-panel>
+                <message ng-show="!subObjectives || subObjectives.length == 0">
+                    This goal has no sub-goals.  Add one by clicking above.
+                </message>
+                <child-objectives ng-if="subObjectives && subObjectives.length > 0">
+                    <objective mode="mini" ng-repeat="objective in subObjectives" ng-model="objective" ng-click="loadObjective(objective)"></objective>
+                </child-objectives>
+            </objective>
+        </main-objective>
+    </objectives>
+</div>

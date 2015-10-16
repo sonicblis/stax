@@ -13,15 +13,18 @@
 <header>
     <brand>Stax</brand>
     <user-tools>
-        <tool ng-click="workspaceLoaded = false">Workspaces</tool>
-        <tool ng-click="logout()">Logout</tool>
-        <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
+        <span ng-show="user.authenticated">
+            <tool ng-click="objectiveLoaded = false">Workspaces</tool>
+            <tool ng-click="logout()">Logout</tool>
+            <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
+        </span>
+        <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
     </user-tools>
 </header>
 <div>
-    <div ng-show="!workspaceLoaded" ng-include="'app/workSpaces/workSpaceList.html'"></div>
+    <div ng-show="!objectiveLoaded" ng-include="'app/objectives/objectiveList.html'"></div>
     <centered>
-        <div ng-show="workspaceLoaded" ng-include="'app/objectives/objectiveList.html'"></div>
+        <div ng-show="objectiveLoaded" ng-include="'app/objectives/objective.html'"></div>
     </centered>
 </div>
 </body>

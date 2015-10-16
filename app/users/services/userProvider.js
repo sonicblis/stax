@@ -1,71 +1,54 @@
-app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', '$injector', function($rootScope, $firebaseObject, $firebaseArray, $injector){
+app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'objectiveProvider', function($rootScope, $firebaseObject, $firebaseArray, objectiveProvider){
     //local
     var _this = this;
-    var currentUser = {authenticated: false};
-    var ref = new Firebase("https://stax.firebaseio.com");
-    var user = function(authData){
+    var ref = new Firebase("https://stax.firebaseio.com/accounts");
+    var userRef = null;
+    var userInfo = function(authData){
         this.name = authData.google.displayName;
-        this.id = authData.google.id;
+        this.id = authData.uid;
         this.icon = authData.google.profileImageURL;
         this.authenticated = true;
     }
+
     $rootScope.logout = function(){
         _this.logout();
     }
-    function loadUserData(auth){
-        currentUser = $firebaseObject(ref.child('users').child(auth.google.id));
-        _this.workspaces = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaces'));
-        _this.workspaceData = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaceData'));
-        _this.invitationList = $firebaseArray(ref.child('invitations'));
-        if (sessionStorage.loadedWorkspace)
-        {
-            var objectiveProvider = $injector.get("objectiveProvider");
-            objectiveProvider.loadWorkspaceObjective(sessionStorage.loadedWorkspace);
-        }
-        $rootScope.user = currentUser;
-    };
-    function addUser(user){
-        _this.accounts.$loaded().then(function(){
-            if (!_this.accounts[user.id]) {
-                _this.accounts[user.id] = user;
-                _this.accounts.$save();
-            }
+    $rootScope.login = function(){
+        _this.login();
+    }
+
+    function loadUser(user){
+        userRef = ref.child(user.uid);
+        var _userInfo = new userInfo(user);
+        _userInfo.lastLoggedIn = Firebase.ServerValue.TIMESTAMP;
+        _this.collaborations = $firebaseArray(userRef.child('collaborating'));
+        $rootScope.user = $firebaseObject(userRef);
+
+        userRef.update(_userInfo, function(){
+            objectiveProvider.loadObjectivesForUser();
         });
     };
 
     //exposed
-    this.workspaces = [];
-    this.workspaceData = [];
-    this.invitationList = [];
-    this.addInvitation = function(email, key){
-
-        _this.invitationList.$add({email: email, key: key, invitedOn: new Date().getTime()});
-        var objectiveProvider = $injector.get("objectiveProvider");
-        objectiveProvider.collaborators.$add({email: email, invitedOn: new Date().getTime(), status: 'pending'});
-    };
     this.logout = function(){
         ref.unauth();
-        _this.currentUser = null;
-        $rootScope.workspaceLoaded = false;
+        objectiveProvider.clearUserData();
+        userRef.update({logout: Firebase.ServerValue.TIMESTAMP});
+        $rootScope.user = {authenticated: false};
     };
-    this.auth = function(){
+    this.login = function(){
+        ref.authWithOAuthPopup("google", function (error, auth) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                loadUser(auth);
+            }
+        });
+    };
+    this.checkForAuth = function(){
         var auth = ref.getAuth();
         if (auth) {
-            loadUserData(auth);
+            loadUser(auth);
         }
-        else{
-            ref.authWithOAuthPopup("google", function (error, auth) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                } else {
-                    loadUserData(auth);
-                    addUser(new user(auth));
-                }
-            });
-        }
-    };
-    this.accounts = $firebaseObject(ref.child('accounts'));
-    this.getUser = function(){
-        return currentUser;
     };
 }]);

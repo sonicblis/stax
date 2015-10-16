@@ -1,9 +1,10 @@
 <span>
-    <abbreviation ng-if="objective && mode == 'mini'">{{objective.name}}</abbreviation>
+    <abbreviation ng-if="objective && mode == 'mini'">{{objective.name}}<span ng-show="objective.public"> (public)</span></abbreviation>
     <span ng-if="objective && mode == 'expanded'">
         <header>
             <name>
                 <span ng-model="objective.name" contenteditable="true" ng-blur="onUpdate()"></span>
+                <span ng-show="objective.public">(public)</span>
             </name>
             <tool-toggle>
                 <i class="fa fa-reorder" ng-click="tools.show = true"></i>
@@ -22,9 +23,6 @@
         </taskbar>
     </span>
     <ng-transclude></ng-transclude>
-    <message ng-if="mode == 'expanded'" ng-show="!objective.subObjectives || objective.subObjectives.hasOwnProperty('$value')">
-        This goal has no sub-goals.  Add one by clicking above.
-    </message>
     <progressbar progress="objective.progress"></progressbar>
     <task-info-panel ng-show="taskIsSelected" ng-if="mode == 'expanded'"></task-info-panel>
 </span>

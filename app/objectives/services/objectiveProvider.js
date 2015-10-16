@@ -4,6 +4,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
     var objectivesLoadedDelegates = [];
     var rootRef = new Firebase('https://stax.firebaseio.com');
     var ref = rootRef.child('objectives');
+    var collaboratorRecord = {};
 
     this.currentRef = null;
     this.currentObjective = null;
@@ -77,24 +78,51 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
         if (clearPrevious){
             _this.currentObjective = null;
             _this.parentObjectives.length = 0;
+            _this.collaborators.length = 0;
+            _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
         }
         if (_this.currentObjective){ //an objective has already been loaded, so this is a child or a parent
             //check if parent
             var parentIndex = _this.parentObjectives.indexOf(objective);
-            if (parentIndex > -1) { //this is a parent
+            if (parentIndex > -1) { //this is a parent, we need to remove any collaborators added from children
                 _this.parentObjectives.splice(parentIndex);
+                _this.collaborators = _this.collaborators.filter(function(collaborator){
+                    return collaboratorRecord[objective.$id].find(function(key){ return key == collaborator.$id ;}) === 'undefined';
+                });
+                if (_this.parentObjectives.length == 0){
+                    _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
+                }
             }
-            else //this is a child
+            else //this is a child, okay to add collaborators to the list
             {
                 _this.parentObjectives.push(_this.currentObjective);
             }
         }
         _this.currentObjective = objective;
         _this.objectiveTasks = $firebaseArray(rootRef.child('objectiveTasks').child(objective.$id));
-        _this.subObjectives = $firebaseArray(rootRef.child('objectives').orderByChild('parent').equalTo(objective.$id));
-        objectiveLoadedDelegates.forEach(function(delegate){
-            delegate(_this.currentObjective, _this.objectiveTasks, _this.subObjectives);
+        _this.subObjectives = $firebaseArray(ref.orderByChild('parent').equalTo(objective.$id));
+        ref.child(objective.$id).child('collaborators').on('child_added', function(collaborator){
+            var _collaborator = _this.collaborators.find(function(existingCollaborator){return existingCollaborator.$id == collaborator.key()});
+            if (!_collaborator) {
+                var firebaseCollaborator = $firebaseObject(rootRef.child('accounts').child(collaborator.key()))
+                firebaseCollaborator.$loaded(function(){firebaseCollaborator.objectiveKey = objective.$id;});
+                _this.collaborators.push(firebaseCollaborator);
+            }
         });
+        //create a record of what collaborators were added from all parents at this level to remove anyone added later
+        //if a parent is selected
+        collaboratorRecord[objective.$id] = _this.collaborators.map(function(collaborator){return collaborator.$id;});
+        ref.child(objective.$id).child('collaborators').on('child_removed', function(collaborator){
+            var _collaborator = _this.collaborators.find(function(existingCollaborator){return existingCollaborator.key() == collaborator.key()});
+            _this.collaborators.splice(_this.collaborators.indexOf(_collaborator), 1);
+        });
+        objectiveLoadedDelegates.forEach(function(delegate){
+            delegate(_this.currentObjective, _this.objectiveTasks, _this.subObjectives, _this.collaborators);
+        });
+        $rootScope.objectiveLoaded = true;
+    };
+    this.loadObjectiveFromKey = function(key){
+        this.loadObjective($firebaseObject(ref.child(key)));
     };
     this.updateObjective = function(objective){
         ref.child(objective.$id).update({name: objective.name, public: objective.public});
@@ -123,4 +151,10 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
         _this.subObjectives.length = 0;
         _this.parentObjectives.length = 0;
     }
+    this.setCollaboratorStatus = function(collaborator, status){
+        var updates = {};
+        updates['accounts/' + collaborator.$id + '/collaborating/' + collaborator.objectiveKey + '/status'] = status;
+        updates['objectives/' + collaborator.objectiveKey + '/collaborators/' + collaborator.$id + '/status'] = status;
+        rootRef.update(updates);
+    };
 }]);

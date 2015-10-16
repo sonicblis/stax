@@ -1,4 +1,7 @@
 <div ng-controller="objectiveListController">
+    <collaborators>
+        <collaborator on-status-change="updateCollaboratorStatus(collaborator, newStatus)" ng-repeat="collaborator in collaborators" ng-model="collaborator"></collaborator>
+    </collaborators>
     <objectives>
         <parent-objectives>
             <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadObjective(parentObjective)">{{parentObjective.name}}</objective>

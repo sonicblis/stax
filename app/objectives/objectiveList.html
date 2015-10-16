@@ -1,6 +1,6 @@
 <div ng-controller="ObjectiveListController">
     <!-- no objectives exists so they have none or aren't logged in -->
-    <new-member-welcome class="center" ng-show="objectives.length == 0">
+    <new-member-welcome class="center" ng-show="objectives.length == 0 && collaboratingObjectives.length == 0">
         <h1>Welcome to Stax</h1>
         <h3>
             Stax is a collaborative workspace for accomplishing anything by promoting planning, transparency and
@@ -24,11 +24,12 @@
     </new-member-welcome>
 
     <!-- objectives have been loaded and exist (must be logged in) -->
-    <existing-member-welcome class="center" ng-show="user.authenticated && objectives.length > 0">
+    <existing-member-welcome class="center" ng-show="user.authenticated && objectives.length > 0 || collaboratingObjectives.length > 0">
         <h1>Welcome back to Stax</h1>
         <h3>What'r we working on today?</h3>
         <objective-list>
-            <objective-item ng-repeat="objective in objectives" ng-click="loadObjective(objective)">{{objective.name}}</objective-item>
+            <objective-item ng-repeat="objective in objectives" ng-click="loadObjective(objective)">{{objective.name}}<button ng-click="togglePublic(objective, $event)" ng-class="{'warn':objective.public,'success':!objective.public}">{{(objective.public) ? 'Public' : 'Private'}}</button></objective-item>
+            <objective-item ng-repeat="objective in collaboratingObjectives" ng-click="loadObjective(objective)">{{objective.name}} <button class="success">Leave</button></objective-item>
             <new-objective ng-click="adding = true" ng-hide="adding">New Workspace</new-objective>
             <new-objective-form ng-show="adding">
                 <input autofocus type="text" ng-model="newObjectiveName" ng-keypress="key($event)" /><i ng-click="addObjective()" class="fa fa-save">

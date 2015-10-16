@@ -1,8 +1,9 @@
 app.controller("objectiveListController", ['$scope', 'objectiveProvider', '$rootScope', function($scope, objectiveProvider, $rootScope){
-    objectiveProvider.objectiveProvided(function(objective, tasks, subObjectives){
+    objectiveProvider.objectiveProvided(function(objective, tasks, subObjectives, collaborators){
         $scope.objective = objective;
         $scope.tasks = tasks;
         $scope.subObjectives = subObjectives;
+        $scope.collaborators = collaborators;
     });
     $scope.adding = false;
     $scope.addNewSubObjective = objectiveProvider.addSubObjective;
@@ -15,6 +16,9 @@ app.controller("objectiveListController", ['$scope', 'objectiveProvider', '$root
     };
     $scope.updateObjective = function(objective){
         objectiveProvider.updateObjective(objective);
+    };
+    $scope.updateCollaboratorStatus = function(collaborator, status){
+        objectiveProvider.setCollaboratorStatus(collaborator, status);
     };
     $scope.togglePublic = function(objective){
         objective.public = !objective.public;

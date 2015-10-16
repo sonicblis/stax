@@ -1,0 +1,7 @@
+<header>
+    <user-info><img ng-src="{{user.icon}}" />{{user.name}}</user-info>
+    <span ng-show="user.$id != $root.user.id" ng-switch="user.collaborating[user.objectiveKey].status">
+        <button ng-switch-default class="success" ng-click="onStatusChange({newStatus: 'approved'})">Approve</button>
+        <button ng-switch-when="approved" class="danger ghost" ng-click="onStatusChange({newStatus: 'blocked'})">Kick</button>
+    </span>
+</header>

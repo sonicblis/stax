@@ -82,21 +82,30 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
             _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
         }
         if (_this.currentObjective){ //an objective has already been loaded, so this is a child or a parent
+
+            // create a record of what collaborators were added from all parents at this level to remove anyone added later
+            //if a parent is selected
+            collaboratorRecord[_this.currentObjective.$id] = _this.collaborators.map(function(collaborator){return collaborator.$id;});
+
             //check if parent
             var parentIndex = _this.parentObjectives.indexOf(objective);
             if (parentIndex > -1) { //this is a parent, we need to remove any collaborators added from children
                 _this.parentObjectives.splice(parentIndex);
                 _this.collaborators = _this.collaborators.filter(function(collaborator){
-                    return collaboratorRecord[objective.$id].find(function(key){ return key == collaborator.$id ;}) === 'undefined';
+                    var collaboratorKeyArray = collaboratorRecord[objective.$id];
+                    var keyInRecord = collaboratorKeyArray.find(function(key){
+                        return key == collaborator.$id;
+                    });
+                    return (keyInRecord);
                 });
-                if (_this.parentObjectives.length == 0){
-                    _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
-                }
             }
             else //this is a child, okay to add collaborators to the list
             {
                 _this.parentObjectives.push(_this.currentObjective);
             }
+        }
+        else if (!clearPrevious && objective && objective.owner) {
+            _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
         }
         _this.currentObjective = objective;
         _this.objectiveTasks = $firebaseArray(rootRef.child('objectiveTasks').child(objective.$id));
@@ -109,9 +118,6 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
                 _this.collaborators.push(firebaseCollaborator);
             }
         });
-        //create a record of what collaborators were added from all parents at this level to remove anyone added later
-        //if a parent is selected
-        collaboratorRecord[objective.$id] = _this.collaborators.map(function(collaborator){return collaborator.$id;});
         ref.child(objective.$id).child('collaborators').on('child_removed', function(collaborator){
             var _collaborator = _this.collaborators.find(function(existingCollaborator){return existingCollaborator.key() == collaborator.key()});
             _this.collaborators.splice(_this.collaborators.indexOf(_collaborator), 1);
@@ -122,7 +128,11 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
         $rootScope.objectiveLoaded = true;
     };
     this.loadObjectiveFromKey = function(key){
-        this.loadObjective($firebaseObject(ref.child(key)));
+        $firebaseObject(ref.child(key)).$loaded(
+            function(objective){
+                _this.loadObjective(objective, true);
+            }
+        );
     };
     this.updateObjective = function(objective){
         ref.child(objective.$id).update({name: objective.name, public: objective.public});

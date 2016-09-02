@@ -7,7 +7,7 @@
             <objective mode="collapsed" ng-repeat="parentObjective in parentObjectives" ng-click="loadObjective(parentObjective)">{{parentObjective.name}}</objective>
         </parent-objectives>
         <main-objective>
-            <objective mode="expanded" tasks="tasks" on-update="updateObjective(objective)" on-delete="deleteObjective()" ng-model="objective">
+            <objective legend="legend" mode="expanded" tasks="tasks" on-update="updateObjective(objective)" on-delete="deleteObjective()" ng-model="objective">
                 <objective-tools ng-class="{'collapsed':!$parent.tools.show}">
                     <collapse-handle ng-click="$parent.tools.show = false"><i class="fa fa-caret-right"></i></collapse-handle>
                     <tool ng-click="togglePublic(objective)">{{(objective.public) ? 'Disallow' : 'Allow'}} Join Requests</tool>
@@ -23,10 +23,24 @@
                 <message ng-show="!subObjectives || subObjectives.length == 0">
                     This goal has no sub-goals.  Add one by clicking above.
                 </message>
-                <child-objectives ng-if="subObjectives && subObjectives.length > 0">
-                    <objective mode="mini" ng-repeat="objective in subObjectives" ng-model="objective" ng-click="loadObjective(objective)"></objective>
+                <child-objectives ng-if="subObjectives && subObjectives.length > 0" ui-sortable="childObjectiveSortOptions" ng-model="subObjectives">
+                    <objective mode="mini" ng-repeat="objective in subObjectives | orderBy:objective.$priority" ng-model="objective" ng-click="loadObjective(objective)"></objective>
                 </child-objectives>
             </objective>
         </main-objective>
     </objectives>
+    <legend ng-show="legend.length > 0">
+        <slide-panel>
+            <toolbar class="ghost">
+                <tool ng-hide="editingLegend" ng-click="$parent.editingLegend = true">Edit...</tool>
+                <tool ng-show="editingLegend" ng-click="saveLegend(); $parent.editingLegend = false">Save Changes</tool>
+            </toolbar>
+        </slide-panel>
+        <items ui-sortable="legendSortOptions" ng-model="legend">
+            <item ng-show="legendItem.description || editingLegend" ng-repeat="legendItem in legend">
+                <key><img ng-src="img/{{legendItem.imgPath}}" /></key>
+                <definition contenteditable="true" ng-model="legendItem.description"></definition>
+            </item>
+        </items>
+    </legend>
 </div>

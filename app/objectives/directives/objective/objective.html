@@ -19,7 +19,7 @@
             There are currently no tasks.  Add one by clicking above.
         </message>
         <taskbar ui-sortable="taskSortOptions" ng-model="tasks">
-            <task ng-repeat="task in tasks" on-completed-changed="toggleComplete(task)">{{task.name}}</task>
+            <task check-options="legend" ng-repeat="task in tasks">{{task.name}}</task>
         </taskbar>
     </span>
     <ng-transclude></ng-transclude>

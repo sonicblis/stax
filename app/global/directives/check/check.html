@@ -1,4 +1,8 @@
 <span>
-    <img ng-click="$parent.checked = true" ng-if="!checked" src="img/uncheck-flat.png" />
-    <img ng-click="$parent.checked = false" ng-if="checked" src="img/check-flat.png" />
+    <img ng-src="img/{{task.imgPath || 'blank.png'}}" ng-click="checking = true">
+    <check-options ng-show="checking" ng-click="checking = false; $event.stopPropagation()">
+        <check-option ng-if="checkOption.description" definition="{{checkOption.description}}" ng-repeat="checkOption in checkOptions" ng-click="checkSet({status: checkOption.imgPath})">
+            <img ng-src="img/{{checkOption.imgPath}}">
+        </check-option>
+    </check-options>
 </span>

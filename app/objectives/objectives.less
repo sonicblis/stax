@@ -119,3 +119,48 @@ new-objective-form{
     font-size: 24pt;
   }
 }
+
+legend{
+  float: right;
+  display: inline-block;
+  background: #3f7ebb;
+  overflow: auto;
+  padding: 10px 10px 5px 10px;
+  position: absolute;
+  right: 10px;
+  border: solid 1px #0b4574;
+
+  toggle{
+    right: -10px !important;
+  }
+
+  toolbar {
+    display: block;
+
+    tool {
+      color: white;
+      cursor: pointer;
+      margin-bottom: 5px;
+      display: block;
+    }
+  }
+  item{
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+
+    key{
+      display: inline-block;
+      img{
+        vertical-align: -.1em;
+      }
+    }
+
+    definition{
+      display: inline-block;
+      margin-left: 3px;
+      color: white;
+      min-width: 100px;
+    }
+  }
+}

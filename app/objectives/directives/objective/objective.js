@@ -7,7 +7,8 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
             mode: '@',
             tasks: '=',
             onDelete: '&',
-            onUpdate: '&'
+            onUpdate: '&',
+            legend: '='
         },
         templateUrl: 'app/objectives/directives/objective/objective.html',
         controller: ['$scope', function($scope){
@@ -23,7 +24,8 @@ app.directive("objective", ['objectiveProvider', function(objectiveProvider){
                         task.$priority = i++;
                         objectiveProvider.objectiveTasks.$save(task);
                     });
-                }
+                },
+                axis: 'y'
             }
         }],
         link: function($scope, $el, $attr){

@@ -12,6 +12,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
     this.parentObjectives = [];
     this.collaborators = [];
     this.objectiveTasks = [];
+    this.legendItems = [];
 
     // private functions
     function updateCurrentObjectiveProgress() {
@@ -64,6 +65,9 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
             delegate(_this.userObjectives, publicObjectives);
         });
     };
+    this.updateLegend = function(rootObjectiveKey, legend){
+        ref.child(rootObjectiveKey).child('legend').set(legend);
+    };
     this.addSubObjective = function (name) {
         _this.subObjectives.$add({name: name, parent: _this.currentObjective.$id});
     };
@@ -79,7 +83,9 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
             _this.currentObjective = null;
             _this.parentObjectives.length = 0;
             _this.collaborators.length = 0;
-            _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
+            if (objective.owner) {
+                _this.collaborators.push($firebaseObject(rootRef.child('accounts').child(objective.owner)));
+            }
         }
         if (_this.currentObjective){ //an objective has already been loaded, so this is a child or a parent
 
@@ -109,6 +115,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
         }
         _this.currentObjective = objective;
         _this.objectiveTasks = $firebaseArray(rootRef.child('objectiveTasks').child(objective.$id));
+        _this.legendItems = $firebaseArray(ref.child(objective.$id).child('legend'));
         _this.subObjectives = $firebaseArray(ref.orderByChild('parent').equalTo(objective.$id));
         ref.child(objective.$id).child('collaborators').on('child_added', function(collaborator){
             var _collaborator = _this.collaborators.find(function(existingCollaborator){return existingCollaborator.$id == collaborator.key()});
@@ -123,7 +130,7 @@ app.service("objectiveProvider", ['$firebaseObject', '$firebaseArray', '$q', '$r
             _this.collaborators.splice(_this.collaborators.indexOf(_collaborator), 1);
         });
         objectiveLoadedDelegates.forEach(function(delegate){
-            delegate(_this.currentObjective, _this.objectiveTasks, _this.subObjectives, _this.collaborators);
+            delegate(_this.currentObjective, _this.objectiveTasks, _this.subObjectives, _this.collaborators, _this.legendItems);
         });
         $rootScope.objectiveLoaded = true;
     };

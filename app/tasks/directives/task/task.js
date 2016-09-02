@@ -6,8 +6,13 @@ app.directive('task', ['objectiveProvider', 'taskProvider', function(objectivePr
             $scope.save = function(task){
                 objectiveProvider.updateTask(task);
             };
+            $scope.updateTaskStatus = function(task, status){
+                task.imgPath = status;
+                objectiveProvider.updateTask(task);
+            };
             $scope.clientRect = {};
             $scope.selectTask = function(task){
+                console.log('task selected');
                 taskProvider.setSelectedTask(taskProvider.selectedTask == task ? {} : task, $scope.clientRect);
             }
         }],
